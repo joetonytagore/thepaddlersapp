@@ -80,6 +80,22 @@ if [ "${BRING_FRONTENDS:-true}" = "true" ]; then
       fi
       if [ "$ok_admin" = true ] && [ "$ok_player" = true ]; then
         echo "Frontends are up: web-admin=5173, web-player=5174"
+
+        # Optionally open the frontends in the default browser (macOS: open, Linux: xdg-open)
+        if [ "${OPEN_FRONTENDS_BROWSER:-true}" = "true" ]; then
+          echo "Opening frontends in your default browser..."
+          if command -v open >/dev/null 2>&1; then
+            open http://localhost:5173 || true
+            open http://localhost:5174 || true
+          elif command -v xdg-open >/dev/null 2>&1; then
+            xdg-open http://localhost:5173 || true
+            xdg-open http://localhost:5174 || true
+          else
+            echo "No known command to open browser automatically (tried 'open' and 'xdg-open')." >&2
+            echo "Please open http://localhost:5173 and http://localhost:5174 manually."
+          fi
+        fi
+
         break
       fi
       echo -n '.'
