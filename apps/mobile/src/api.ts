@@ -1,0 +1,27 @@
+import * as SecureStore from 'expo-secure-store'
+import { API_BASE } from './config'
+
+const TOKEN_KEY = 'tp_token'
+
+export async function setToken(token:string|null){
+  if(token) await SecureStore.setItemAsync(TOKEN_KEY, token)
+  else await SecureStore.deleteItemAsync(TOKEN_KEY)
+}
+
+export async function getToken(){
+  return await SecureStore.getItemAsync(TOKEN_KEY)
+}
+
+export async function authFetch(path:string, init:any = {}){
+  const headers = new Headers(init.headers || {})
+  const token = await getToken()
+  if(token) headers.set('Authorization', 'Bearer ' + token)
+  const res = await fetch(API_BASE + path, {...init, headers})
+  return res
+}
+
+export async function login(email:string){
+  const res = await fetch(API_BASE + '/api/auth/login', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({email})})
+  return res
+}
+

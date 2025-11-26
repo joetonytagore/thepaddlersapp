@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  web-admin:
+    build:
+      context: ./apps/web-admin
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    environment:
+      - NODE_ENV=production
+
+  web-player:
+    build:
+      context: ./apps/web-player
+      dockerfile: Dockerfile
+    ports:
+      - "5174:80"
+    environment:
+      - NODE_ENV=production
+

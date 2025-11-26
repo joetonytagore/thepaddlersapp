@@ -1,1 +1,6 @@
 rootProject.name = 'ThePaddlersApp'
+
+// Include the legacy backend module for Gradle tasks and keep the mapped services path
+include 'backend'
+include 'services:booking-service'
+project(':services:booking-service').projectDir = file('backend')

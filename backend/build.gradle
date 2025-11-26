@@ -1,0 +1,47 @@
+plugins {
+    id 'org.springframework.boot' version '3.2.6'
+    id 'io.spring.dependency-management' version '1.1.3'
+    id 'java'
+}
+
+group = 'org.thepaddlers'
+version = '0.1.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.flywaydb:flyway-core'
+    // Monitoring
+    implementation 'io.micrometer:micrometer-registry-prometheus:1.11.5'
+    // Sentry for error reporting (starter)
+    implementation 'io.sentry:sentry-spring-boot-starter:6.27.0'
+    // Stripe Java SDK for PaymentIntent creation (server-side)
+    implementation 'com.stripe:stripe-java:22.28.0'
+    // JWT library for local auth tokens
+    implementation 'com.auth0:java-jwt:4.4.0'
+    // Use newer DB drivers to mitigate known CVEs
+    // Use a widely-available Postgres JDBC driver version for compatibility
+    runtimeOnly 'org.postgresql:postgresql:42.5.4'
+    runtimeOnly 'com.h2database:h2:2.2.224'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.0'
+    testImplementation 'org.testcontainers:postgresql:1.19.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+springBoot {
+    mainClass = 'org.thepaddlers.Application'
+}
