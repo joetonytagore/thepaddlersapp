@@ -1,11 +1,41 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Retry helper: retry <max_attempts> <initial_sleep_seconds> -- <cmd> <args...>
+# Example: retry 3 5 -- docker compose up -d
+retry() {
+  if [ "$#" -lt 3 ]; then
+    echo "retry: usage: retry <max_attempts> <sleep_seconds> -- <cmd> [args...]" >&2
+    return 2
+  fi
+  local max_attempts="$1"; shift
+  local sleep_seconds="$1"; shift
+  if [ "$1" != "--" ]; then
+    echo "retry: expected -- separator" >&2
+    return 2
+  fi
+  shift
+  local attempt=1
+  local cmd=("$@")
+  while true; do
+    "${cmd[@]}" && return 0 || true
+    if [ "$attempt" -ge "$max_attempts" ]; then
+      echo "Command failed after $attempt attempts: ${cmd[*]}" >&2
+      return 1
+    fi
+    echo "Command failed. Attempt $attempt/$max_attempts. Retrying in $sleep_seconds seconds..."
+    sleep "$sleep_seconds"
+    attempt=$((attempt+1))
+    sleep_seconds=$((sleep_seconds*2))
+  done
+}
+
 ROOT_DIR=$(cd "$(dirname "$0")/.." && pwd)
 cd "$ROOT_DIR"
 
 echo "1) Start Postgres + Redis via docker compose"
-docker compose up -d
+# Retry the initial compose up because network/npm pulls may transiently fail
+retry 3 5 -- docker compose up -d
 
 echo "2) Build backend jar"
 ./gradlew :backend:bootJar --no-daemon --warning-mode=all
@@ -17,7 +47,8 @@ if [[ ! -f "$JAR" ]]; then
 fi
 
 echo "3) Build Docker image"
-docker build -t thepaddlers-backend:local -f backend/Dockerfile backend
+# Retry docker build in case of transient registry/network issues
+retry 3 5 -- docker build -t thepaddlers-backend:local -f backend/Dockerfile backend
 
 echo "4) Find compose network"
 NETWORK=$(docker network ls --filter name=$(basename "$ROOT_DIR")_default --format "{{.Name}}" | head -n1)
@@ -64,8 +95,9 @@ echo "Done. If you want to stop the container, run: docker rm -f thepaddlers-bac
 if [ "${BRING_FRONTENDS:-true}" = "true" ]; then
   if [ -f docker-compose.frontends.yml ]; then
     echo "8) Build & start frontends via docker-compose.frontends.yml"
-    docker compose -f docker-compose.frontends.yml build --pull
-    docker compose -f docker-compose.frontends.yml up -d
+    # Retry frontend build (npm install might fail transiently) and up
+    retry 3 10 -- docker compose -f docker-compose.frontends.yml build --pull
+    retry 3 5 -- docker compose -f docker-compose.frontends.yml up -d
 
     # Wait for frontends to be reachable on their ports
     echo "Waiting for frontends to become available (http://localhost:5173 and http://localhost:5174)"
