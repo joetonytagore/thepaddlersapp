@@ -1,0 +1,53 @@
+name: CI - Backend Tests + E2E Smoke
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ '*' ]
+
+jobs:
+  backend-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U test -d testdb" --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: temurin
+      - name: Run backend tests (includes Testcontainers integration)
+        run: |
+          ./gradlew :backend:test --no-daemon
+
+  ci-smoke:
+    needs: backend-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+      - name: Start dependent services (Postgres)
+        run: |
+          docker-compose -f docker-compose.local.yml up -d db
+      - name: Run Flyway migrations
+        run: |
+          cd backend && ./gradlew flywayMigrate
+      - name: Start backend
+        run: |
+          cd backend && ./gradlew bootRun & sleep 6
+      - name: Run CI smoke script (posts simulated webhook)
+        run: |
+          ./scripts/e2e/ci_smoke_test.sh
+

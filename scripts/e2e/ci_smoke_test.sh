@@ -28,7 +28,7 @@ done
 
 # Run a quick webhook POST to simulate Stripe event
 echo "Posting simulated webhook event..."
-curl -s -X POST http://localhost:8080/api/payments/webhook -H 'Content-Type: application/json' --data-binary @- <<'JSON'
+curl -s -X POST http://localhost:8080/api/webhooks/stripe -H 'Content-Type: application/json' --data-binary @- <<'JSON'
 {
   "id": "evt_ci_test_1",
   "type": "payment_intent.succeeded",
@@ -52,4 +52,3 @@ sleep 1
 
 echo "CI smoke test complete. Stopping backend."
 kill $BACKEND_PID || true
-

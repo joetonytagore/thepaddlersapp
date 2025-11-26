@@ -31,17 +31,26 @@ public class PaymentsController {
             // and use reflection to extract common fields.
             Object intent = stripeService.createPaymentIntent(Long.valueOf(amount), currency);
             Map<String, Object> resp = new HashMap<>();
-            // access common methods reflectively to avoid compile-time dependency on Stripe types
-            try {
-                var clientSecretMethod = intent.getClass().getMethod("getClientSecret");
-                var idMethod = intent.getClass().getMethod("getId");
-                Object clientSecret = clientSecretMethod.invoke(intent);
-                Object id = idMethod.invoke(intent);
-                resp.put("clientSecret", clientSecret);
-                resp.put("id", id);
-            } catch (Exception nsme) {
-                // fallback: return a safe string representation of the intent object
-                resp.put("intent", String.valueOf(intent));
+            // If the StripeService returned a parsed Map (REST API), extract client_secret
+            if (intent instanceof Map) {
+                Map<?, ?> m = (Map<?, ?>) intent;
+                if (m.containsKey("client_secret")) {
+                    resp.put("clientSecret", m.get("client_secret"));
+                }
+                if (m.containsKey("id")) resp.put("id", m.get("id"));
+            } else {
+                // access common methods reflectively to avoid compile-time dependency on Stripe types
+                try {
+                    var clientSecretMethod = intent.getClass().getMethod("getClientSecret");
+                    var idMethod = intent.getClass().getMethod("getId");
+                    Object clientSecret = clientSecretMethod.invoke(intent);
+                    Object id = idMethod.invoke(intent);
+                    resp.put("clientSecret", clientSecret);
+                    resp.put("id", id);
+                } catch (Exception nsme) {
+                    // fallback: return a safe string representation of the intent object
+                    resp.put("intent", String.valueOf(intent));
+                }
             }
 
             return ResponseEntity.ok(resp);
@@ -60,6 +69,25 @@ public class PaymentsController {
     public ResponseEntity<?> charge(@RequestBody Map<String, Object> body) {
         // stubbed: pretend we called Stripe and succeeded
         return ResponseEntity.ok(Map.of("status", "charged", "details", body));
+    }
+
+    @PostMapping("/payments/create-checkout-session")
+    public ResponseEntity<?> createCheckoutSession(@RequestBody Map<String, Object> body) {
+        try {
+            Integer amount = (Integer) body.getOrDefault("amount", 1000);
+            String currency = (String) body.getOrDefault("currency", "usd");
+            String successUrl = (String) body.getOrDefault("successUrl", "https://example.com/success");
+            String cancelUrl = (String) body.getOrDefault("cancelUrl", "https://example.com/cancel");
+            Map<String, Object> session = stripeService.createCheckoutSession(Long.valueOf(amount), currency, successUrl, cancelUrl);
+            // session contains 'url' for redirect
+            return ResponseEntity.ok(Map.of("url", session.get("url"), "session", session));
+        } catch (Exception e) {
+            String className = e.getClass().getName();
+            if (className.startsWith("com.stripe.")) {
+                return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
+            }
+            return ResponseEntity.status(400).body(Map.of("error", e.getMessage()));
+        }
     }
 
     // Renamed to avoid conflict with dedicated StripeWebhookController which handles signed webhooks.
