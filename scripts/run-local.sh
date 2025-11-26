@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Retry configuration (can be overridden via environment variables)
+RETRY_ATTEMPTS=${RETRY_ATTEMPTS:-3}
+RETRY_SLEEP_SECONDS=${RETRY_SLEEP_SECONDS:-5}
+# Separate defaults for frontend build because npm installs may take longer / be flaky
+FRONTEND_RETRY_ATTEMPTS=${FRONTEND_RETRY_ATTEMPTS:-3}
+FRONTEND_RETRY_SLEEP_SECONDS=${FRONTEND_RETRY_SLEEP_SECONDS:-10}
+# Backend image build specific retries (can reuse defaults)
+BUILD_RETRY_ATTEMPTS=${BUILD_RETRY_ATTEMPTS:-${RETRY_ATTEMPTS}}
+BUILD_RETRY_SLEEP_SECONDS=${BUILD_RETRY_SLEEP_SECONDS:-${RETRY_SLEEP_SECONDS}}
+
 # Retry helper: retry <max_attempts> <initial_sleep_seconds> -- <cmd> <args...>
 # Example: retry 3 5 -- docker compose up -d
 retry() {
@@ -35,7 +45,7 @@ cd "$ROOT_DIR"
 
 echo "1) Start Postgres + Redis via docker compose"
 # Retry the initial compose up because network/npm pulls may transiently fail
-retry 3 5 -- docker compose up -d
+retry "$RETRY_ATTEMPTS" "$RETRY_SLEEP_SECONDS" -- docker compose up -d
 
 echo "2) Build backend jar"
 ./gradlew :backend:bootJar --no-daemon --warning-mode=all
@@ -48,7 +58,7 @@ fi
 
 echo "3) Build Docker image"
 # Retry docker build in case of transient registry/network issues
-retry 3 5 -- docker build -t thepaddlers-backend:local -f backend/Dockerfile backend
+retry "$BUILD_RETRY_ATTEMPTS" "$BUILD_RETRY_SLEEP_SECONDS" -- docker build -t thepaddlers-backend:local -f backend/Dockerfile backend
 
 echo "4) Find compose network"
 NETWORK=$(docker network ls --filter name=$(basename "$ROOT_DIR")_default --format "{{.Name}}" | head -n1)
@@ -96,8 +106,8 @@ if [ "${BRING_FRONTENDS:-true}" = "true" ]; then
   if [ -f docker-compose.frontends.yml ]; then
     echo "8) Build & start frontends via docker-compose.frontends.yml"
     # Retry frontend build (npm install might fail transiently) and up
-    retry 3 10 -- docker compose -f docker-compose.frontends.yml build --pull
-    retry 3 5 -- docker compose -f docker-compose.frontends.yml up -d
+    retry "$FRONTEND_RETRY_ATTEMPTS" "$FRONTEND_RETRY_SLEEP_SECONDS" -- docker compose -f docker-compose.frontends.yml build --pull
+    retry "$FRONTEND_RETRY_ATTEMPTS" "$FRONTEND_RETRY_SLEEP_SECONDS" -- docker compose -f docker-compose.frontends.yml up -d
 
     # Wait for frontends to be reachable on their ports
     echo "Waiting for frontends to become available (http://localhost:5173 and http://localhost:5174)"
