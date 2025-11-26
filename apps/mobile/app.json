@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "ThePaddlersApp",
+    "slug": "thepaddlersapp",
+    "version": "1.0.0",
+    "plugins": ["stripe-react-native"],
+    "extra": {
+      "stripePublishableKey": ""
+    }
+  }
+}
+
