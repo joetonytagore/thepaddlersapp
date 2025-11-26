@@ -69,7 +69,9 @@ if [ "${BRING_FRONTENDS:-true}" = "true" ]; then
 
     # Wait for frontends to be reachable on their ports
     echo "Waiting for frontends to become available (http://localhost:5173 and http://localhost:5174)"
-    for i in {1..30}; do
+    # Number of seconds to wait for frontends to become available (default 120)
+    FRONTEND_WAIT_SECONDS=${FRONTEND_WAIT_SECONDS:-120}
+    for i in $(seq 1 "$FRONTEND_WAIT_SECONDS"); do
       ok_admin=false
       ok_player=false
       if curl -sS http://localhost:5173/ >/dev/null 2>&1; then
