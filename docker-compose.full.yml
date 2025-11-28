@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: paddlers
+      POSTGRES_USER: paddlers
+      POSTGRES_PASSWORD: paddlers
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=paddlers
+      - DB_USER=paddlers
+      - DB_PASSWORD=paddlers
+      - SERVER_PORT=8081
+      - SPRING_MAIN_ALLOW_BEAN_DEFINITION_OVERRIDING=true
+      # Use the 'prod' profile in docker-compose so the service uses Postgres + Flyway
+      - SPRING_PROFILES_ACTIVE=prod
+      # If the DB already contains tables (e.g., from previous runs), allow Flyway to
+      # baseline the existing schema so migrations can be applied safely.
+      - SPRING_FLYWAY_BASELINE_ON_MIGRATE=true
+    ports:
+      - "8081:8081"
+
+  web-admin:
+    build:
+      context: ./apps/web-admin
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  web-player:
+    build:
+      context: ./apps/web-player
+      dockerfile: Dockerfile
+    ports:
+      - "5174:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

@@ -1,0 +1,24 @@
+name: Mobile Jest
+
+on:
+  push:
+    paths:
+      - 'apps/mobile/**'
+  pull_request:
+    paths:
+      - 'apps/mobile/**'
+
+jobs:
+  mobile-jest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install mobile dependencies and run Jest
+        working-directory: apps/mobile
+        run: |
+          npm run test:ci
+

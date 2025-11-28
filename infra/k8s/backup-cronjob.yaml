@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: thepaddlers-db-backup
+  namespace: thepaddlers
+spec:
+  schedule: "0 2 * * *" # daily at 02:00 UTC
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: pg-backup
+              image: amazonlinux:2
+              command: ["/bin/sh","-c"]
+              args:
+                - yum install -y postgresql awscli gzip && \
+                  /scripts/pg_backup_to_s3.sh ${S3_BUCKET} ${PG_HOST} ${PG_PORT} ${PG_DB} ${PG_USER}
+              env:
+                - name: S3_BUCKET
+                  valueFrom:
+                    secretKeyRef:
+                      name: thepaddlers-secrets
+                      key: s3_bucket
+                - name: PG_HOST
+                  value: postgres.thepaddlers.svc.cluster.local
+                - name: PG_PORT
+                  value: "5432"
+                - name: PG_DB
+                  value: thepaddlers_prod
+                - name: PG_USER
+                  valueFrom:
+                    secretKeyRef:
+                      name: thepaddlers-secrets
+                      key: pg_user
+                - name: PG_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: thepaddlers-secrets
+                      key: pg_password
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts
+          restartPolicy: OnFailure
+          volumes:
+            - name: scripts
+              configMap:
+                name: thepaddlers-scripts
+

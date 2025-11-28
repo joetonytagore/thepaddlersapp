@@ -1,0 +1,8 @@
+{
+  "name": "thepaddlers-root",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev:frontends": "npx concurrently \"cd apps/web-admin && npm run dev -- --host\" \"cd apps/web-player && npm run dev -- --host --port 5174\""
+  }
+}

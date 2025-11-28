@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: thepaddlers-scripts
+  namespace: thepaddlers
+data:
+  pg_backup_to_s3.sh: |
+    #!/usr/bin/env bash
+    set -euo pipefail
+    S3_BUCKET=${1:-$S3_BUCKET}
+    PG_HOST=${2:-$PG_HOST}
+    PG_PORT=${3:-$PG_PORT}
+    PG_DB=${4:-$PG_DB}
+    PG_USER=${5:-$PG_USER}
+    if [ -z "$S3_BUCKET" ]; then
+      echo "Missing S3_BUCKET"; exit 2
+    fi
+    TIMESTAMP=$(date -u +%Y%m%dT%H%M%SZ)
+    FILENAME="thepaddlers-backup-${TIMESTAMP}.dump"
+    LOCAL_PATH="/tmp/${FILENAME}"
+    echo "Backing up $PG_DB@$PG_HOST:$PG_PORT to $LOCAL_PATH"
+    export PGPASSWORD=${PG_PASSWORD}
+    pg_dump -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -Fc -f "$LOCAL_PATH" "$PG_DB"
+    aws s3 cp "$LOCAL_PATH" "s3://$S3_BUCKET/backups/${FILENAME}"
+    rm -f "$LOCAL_PATH"
+

@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "ios": {
+      "bundleIdentifier": "com.anonymous.thepaddlers-mobile"
+    }
+  }
+}
+

@@ -1,0 +1,21 @@
+import 'dotenv/config';
+
+export default ({ config }) => {
+  return {
+    ...config,
+    ios: {
+      ...(config.ios || {}),
+      bundleIdentifier: process.env.IOS_BUNDLE_IDENTIFIER || 'com.anonymous.thepaddlers-mobile',
+    },
+    expo: {
+      ...(config.expo || {}),
+      extra: {
+        ...(config.expo ? config.expo.extra : {}),
+        stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY || process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
+      },
+      // Pass an options object to avoid the plugin trying to destructure `undefined`.
+      // merchantIdentifier can be set via APPLE_PAY_MERCHANT_ID env var, or left empty.
+      plugins: [ ['@stripe/stripe-react-native', { merchantIdentifier: process.env.APPLE_PAY_MERCHANT_ID || '', enableGooglePay: false }] ],
+    }
+  };
+};
