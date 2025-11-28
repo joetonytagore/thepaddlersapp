@@ -1,0 +1,23 @@
+{
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key"
+      }
+    },
+    "production": {
+      "env": {
+        "STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key"
+      }
+    }
+  }
+}
+
