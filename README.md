@@ -155,3 +155,25 @@ cd apps/web-player && npm install && npm run dev -- --host --port 5174
 # Docker (build & serve static)
 docker compose -f docker-compose.frontends.yml up --build -d
 ```
+
+## Mobile app (Expo) — tests & CI
+
+The mobile app lives in `apps/mobile` and is an Expo-managed React Native app.
+
+Useful scripts (from `apps/mobile/package.json`):
+
+- `npm run install-deps` — install Node dependencies in CI (runs `npm install`).
+- `npm test` — run Jest locally.
+- `npm run test:ci` — CI-friendly test runner (installs deps then runs jest with `--runInBand`).
+
+To run the mobile Jest tests locally:
+
+```bash
+cd apps/mobile
+npm install
+npm test
+```
+
+CI: there's a GitHub Actions workflow `.github/workflows/mobile-jest.yml` that runs the mobile tests on push/PR when files under `apps/mobile/**` change. It checks out the repo, sets up Node 18, and runs `npm run test:ci` in `apps/mobile` (the `test:ci` script installs dependencies then runs Jest). Note: this workflow uses `npm install` inside `test:ci` to avoid lockfile mismatches in this repo.
+
+Mobile payment flow: the mobile `BookingDetails` component now calls the backend `/api/payments/create-payment-intent` to create a Stripe PaymentIntent and uses `@stripe/stripe-react-native`'s `confirmPayment` to confirm the payment with the native CardField.

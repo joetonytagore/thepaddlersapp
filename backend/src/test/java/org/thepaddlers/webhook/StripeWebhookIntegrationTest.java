@@ -46,6 +46,9 @@ public class StripeWebhookIntegrationTest {
     BookingRepository bookingRepository;
 
     @Autowired
+    org.thepaddlers.repository.CourtRepository courtRepository;
+
+    @Autowired
     PaymentTransactionRepository txRepo;
 
     @BeforeAll
@@ -60,10 +63,14 @@ public class StripeWebhookIntegrationTest {
 
     @Test
     void webhook_should_store_transaction_and_update_booking() throws Exception {
-        // Insert a booking to be updated
+        // Insert a court and booking to be updated
+        org.thepaddlers.model.Court court = new org.thepaddlers.model.Court();
+        court.setName("Test Court");
+        court = courtRepository.save(court);
+
         Booking b = new Booking();
         b.setId(100L);
-        b.setCourtId(1L);
+        b.setCourt(court);
         b.setStatus("CONFIRMED");
         bookingRepository.save(b);
 
@@ -93,4 +100,3 @@ public class StripeWebhookIntegrationTest {
         assertEquals(1500L, tx.get().getAmount());
     }
 }
-

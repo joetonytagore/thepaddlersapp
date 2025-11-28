@@ -18,20 +18,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PaymentWebhookE2ETest {
 
     @Test
+    @SuppressWarnings("resource") // HttpClient doesn't need explicit close here in tests
     void postSimulatedStripeEvent() throws Exception {
-        String json = "{\n" +
-                "  \"id\": \"evt_test_e2e_1\",\n" +
-                "  \"type\": \"payment_intent.succeeded\",\n" +
-                "  \"data\": {\n" +
-                "    \"object\": {\n" +
-                "      \"id\": \"pi_test_123\",\n" +
-                "      \"object\": \"payment_intent\",\n" +
-                "      \"metadata\": { \"bookingId\": \"42\" },\n" +
-                "      \"amount\": 1000,\n" +
-                "      \"currency\": \"usd\"\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
+        String json = """
+        {
+          "id": "evt_test_e2e_1",
+          "type": "payment_intent.succeeded",
+          "data": {
+            "object": {
+              "id": "pi_test_123",
+              "object": "payment_intent",
+              "metadata": { "bookingId": "42" },
+              "amount": 1000,
+              "currency": "usd"
+            }
+          }
+        }
+        """;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest.newBuilder()
@@ -44,4 +47,3 @@ public class PaymentWebhookE2ETest {
         assertTrue(resp.statusCode() >= 200 && resp.statusCode() < 300, "Expected 2xx response, got " + resp.statusCode());
     }
 }
-

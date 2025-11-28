@@ -5,7 +5,17 @@
     "jsx": "react-native",
     "strict": false,
     "esModuleInterop": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "types": [
+      "react",
+      "react-native"
+    ],
+    "typeRoots": [
+      "./node_modules/@types"
+    ]
+  },
+  "extends": "expo/tsconfig.base"
 }
-

@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import { View, Text, Button, Linking, TouchableOpacity, Clipboard, Alert } from 'react-native'
 import { authFetch } from './api'
+import { CardField, useStripe } from '@stripe/stripe-react-native'
 
 export default function BookingDetails({booking, onCancel, onNativePay}:{booking:any, onCancel:()=>void, onNativePay?:()=>void}){
   const [msg,setMsg] = useState('')
   const [loading,setLoading] = useState(false)
+  const [showCardField, setShowCardField] = useState(false)
+  const [cardDetails, setCardDetails] = useState<any>(null)
+  const { confirmPayment } = useStripe()
 
   async function cancel(){
     setMsg('')
@@ -84,6 +88,49 @@ export default function BookingDetails({booking, onCancel, onNativePay}:{booking
     setLoading(false)
   }
 
+  // New: Create PaymentIntent on the backend and confirm using stripe-native
+  async function payWithCard(){
+    setMsg('')
+    setLoading(true)
+    try{
+      // Ensure card details present (CardField will collect them)
+      if(!cardDetails || !cardDetails.complete){
+        setMsg('Please enter card details')
+        setLoading(false)
+        return
+      }
+
+      // Ask backend to create a PaymentIntent and return clientSecret
+      const amount = booking.priceCents || 1000
+      const res = await authFetch('/api/payments/create-payment-intent', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ bookingId: booking.id, amount, currency: 'usd' }) })
+      if(!res.ok){
+        let text = ''
+        try{ text = await res.text() }catch(e){}
+        setMsg(text || 'Failed to create PaymentIntent')
+        setLoading(false)
+        return
+      }
+      const j = await res.json()
+      const clientSecret = j.clientSecret || j.client_secret
+      if(!clientSecret){ setMsg('No clientSecret returned'); setLoading(false); return }
+
+      // Confirm payment using stripe-native
+      if(!confirmPayment){ setMsg('Stripe not initialized'); setLoading(false); return }
+      const result = await confirmPayment(clientSecret, { type: 'Card' })
+      if(result.error){
+        setMsg('Payment failed: ' + result.error.message)
+      } else if(result.paymentIntent && result.paymentIntent.status === 'Succeeded' || (result.paymentIntent && result.paymentIntent.status === 'succeeded')){
+        setMsg('Payment successful')
+      } else {
+        // Many Stripe SDKs return paymentIntent with status 'succeeded' or similar
+        setMsg('Payment completed: ' + JSON.stringify(result))
+      }
+    }catch(e:any){
+      setMsg('Network or payment error')
+    }
+    setLoading(false)
+  }
+
   return (
     <View style={{flex:1,padding:16}}>
       <View style={{borderRadius:8, padding:12, backgroundColor:'#f7f7f7', marginBottom:12}}>
@@ -106,6 +153,21 @@ export default function BookingDetails({booking, onCancel, onNativePay}:{booking
       <Button title={loading ? 'Working...' : 'Open checkout (Stripe)'} onPress={createCheckout} disabled={loading} />
       <View style={{height:8}} />
       <Button title={loading ? 'Working...' : 'Pay / Fallback charge'} onPress={charge} disabled={loading} />
+      <View style={{height:8}} />
+      {/* Native card flow using stripe-react-native */}
+      <Button title={showCardField ? 'Hide card entry' : 'Pay with card (native)'} onPress={() => setShowCardField(s => !s)} disabled={loading} />
+      {showCardField && (
+        <View style={{marginTop:12}}>
+          <CardField
+            postalCodeEnabled={false}
+            placeholders={{number: '4242 4242 4242 4242'}}
+            cardStyle={{backgroundColor:'#FFFFFF', textColor:'#000000'}}
+            style={{height:50, marginVertical:8}}
+            onCardChange={(details) => setCardDetails(details)}
+          />
+          <Button title={loading ? 'Working...' : 'Confirm payment'} onPress={payWithCard} disabled={loading} />
+        </View>
+      )}
     </View>
   )
 }

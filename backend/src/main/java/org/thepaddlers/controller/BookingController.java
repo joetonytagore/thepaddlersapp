@@ -11,11 +11,15 @@ import org.thepaddlers.repository.BookingRepository;
 import org.thepaddlers.repository.CourtRepository;
 import org.thepaddlers.repository.UserRepository;
 import org.thepaddlers.repository.WaitlistRepository;
+import org.thepaddlers.api.dto.ErrorResponse;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -70,6 +74,25 @@ public class BookingController {
 
         Booking saved = bookingRepository.save(booking);
         return ResponseEntity.created(URI.create("/api/bookings/" + saved.getId())).body(saved);
+    }
+
+    // New: booking details
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getBooking(@PathVariable("id") Long id) {
+        Optional<Booking> b = bookingRepository.findById(id);
+        if (b.isEmpty()) return ResponseEntity.status(404).body(Map.of("error", "not found"));
+        return ResponseEntity.ok(b.get());
+    }
+
+    // New: cancel booking (soft cancel)
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> cancelBooking(@PathVariable("id") Long id) {
+        Optional<Booking> b = bookingRepository.findById(id);
+        if (b.isEmpty()) return ResponseEntity.status(404).body(Map.of("error", "not found"));
+        Booking booking = b.get();
+        booking.setStatus("CANCELLED");
+        bookingRepository.save(booking);
+        return ResponseEntity.ok(Map.of("status", "cancelled"));
     }
 
     // New: list bookings (optional filters: userId, courtId)

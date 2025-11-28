@@ -52,4 +52,39 @@ public class StripeService {
             throw new RuntimeException("Stripe API returned status=" + resp.statusCode() + " body=" + resp.body());
         }
     }
+
+    /**
+     * Create a Checkout Session via Stripe REST API. Returns parsed JSON Map.
+     */
+    public Map<String, Object> createCheckoutSession(Long amount, String currency, String successUrl, String cancelUrl) throws Exception {
+        if (stripeSecret == null || stripeSecret.isBlank()) {
+            throw new IllegalStateException("Stripe secret is not configured");
+        }
+        // Build form values; price_data for a single-line item
+        StringBuilder form = new StringBuilder();
+        form.append("payment_method_types[]=card");
+        form.append("&mode=payment");
+        form.append("&line_items[0][price_data][currency]=").append(URLEncoder.encode(currency, StandardCharsets.UTF_8));
+        form.append("&line_items[0][price_data][product_data][name]=").append(URLEncoder.encode("Booking", StandardCharsets.UTF_8));
+        form.append("&line_items[0][price_data][unit_amount]=").append(URLEncoder.encode(String.valueOf(amount), StandardCharsets.UTF_8));
+        form.append("&line_items[0][quantity]=1");
+        form.append("&success_url=").append(URLEncoder.encode(successUrl, StandardCharsets.UTF_8));
+        form.append("&cancel_url=").append(URLEncoder.encode(cancelUrl, StandardCharsets.UTF_8));
+
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.stripe.com/v1/checkout/sessions"))
+                .timeout(Duration.ofSeconds(10))
+                .header("Authorization", "Bearer " + stripeSecret)
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                .POST(HttpRequest.BodyPublishers.ofString(form.toString()))
+                .build();
+
+        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+        if (resp.statusCode() >= 200 && resp.statusCode() < 300) {
+            Map<String, Object> parsed = mapper.readValue(resp.body(), Map.class);
+            return parsed;
+        } else {
+            throw new RuntimeException("Stripe API returned status=" + resp.statusCode() + " body=" + resp.body());
+        }
+    }
 }

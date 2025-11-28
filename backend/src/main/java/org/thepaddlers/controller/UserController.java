@@ -26,8 +26,32 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> list() {
-        return userRepository.findAll();
+    public ResponseEntity<?> list(HttpServletRequest request) {
+        // Only allow admins to list all users
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getPrincipal() == null) {
+            ErrorResponse er = ErrorResponse.of(HttpStatus.UNAUTHORIZED, "unauthenticated", request.getRequestURI(), "AUTH_UNAUTHENTICATED");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(er);
+        }
+        Object principal = auth.getPrincipal();
+        Long callerId = null;
+        if (principal instanceof Map) {
+            Object idObj = ((Map<?,?>) principal).get("id");
+            try {
+                callerId = Long.parseLong(String.valueOf(idObj));
+            } catch (Exception ignored) {}
+        }
+        if (callerId == null) {
+            ErrorResponse er = ErrorResponse.of(HttpStatus.FORBIDDEN, "forbidden", request.getRequestURI(), "AUTH_INVALID_PRINCIPAL");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(er);
+        }
+        Optional<User> caller = userRepository.findById(callerId);
+        if (caller.isEmpty() || caller.get().getRole() != org.thepaddlers.model.Role.ROLE_ADMIN) {
+            ErrorResponse er = ErrorResponse.of(HttpStatus.FORBIDDEN, "admin access required", request.getRequestURI(), "AUTH_FORBIDDEN");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(er);
+        }
+        List<User> users = userRepository.findAll();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/me")

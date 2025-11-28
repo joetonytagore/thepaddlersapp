@@ -25,3 +25,25 @@ export async function login(email:string){
   return res
 }
 
+// New helpers
+export async function getMe(){
+  const res = await authFetch('/api/users/me')
+  return res
+}
+
+export async function getCourts(){
+  const res = await fetch(API_BASE + '/api/courts')
+  return res
+}
+
+export async function createBooking(courtId:number, userId:number, startIso:string, endIso:string){
+  const body = { court: { id: courtId }, user: { id: userId }, startAt: startIso, endAt: endIso }
+  const res = await authFetch('/api/bookings', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)})
+  return res
+}
+
+// New: fetch bookings for a user (uses query param userId)
+export async function getBookings(userId:number){
+  const res = await authFetch(`/api/bookings?userId=${userId}`)
+  return res
+}

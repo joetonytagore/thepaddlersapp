@@ -1,0 +1,927 @@
+Run iOS helper script
+Project dir: /Users/joetonytagore/Github/ThePaddlersApp/apps/mobile
+Detected Expo-managed: true
+Running npm ci
+npm warn deprecated osenv@0.1.5: This package is no longer supported.
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+npm warn deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.
+npm warn deprecated @babel/plugin-proposal-optional-catch-binding@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-catch-binding instead.
+npm warn deprecated @babel/plugin-proposal-class-properties@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
+npm warn deprecated rimraf@2.4.5: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated @babel/plugin-proposal-optional-chaining@7.21.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.
+npm warn deprecated @babel/plugin-proposal-async-generator-functions@7.20.7: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-async-generator-functions instead.
+npm warn deprecated rimraf@2.2.8: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@6.0.4: Glob versions prior to v9 are no longer supported
+npm warn deprecated sudo-prompt@9.1.1: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated glob@7.1.6: Glob versions prior to v9 are no longer supported
+npm warn deprecated @babel/plugin-proposal-object-rest-spread@7.20.7: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-object-rest-spread instead.
+npm warn deprecated metro-react-native-babel-preset@0.73.9: Use @react-native/babel-preset instead
+npm warn deprecated metro-react-native-babel-preset@0.73.10: Use @react-native/babel-preset instead
+npm warn deprecated metro-react-native-babel-preset@0.73.10: Use @react-native/babel-preset instead
+npm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm warn deprecated @xmldom/xmldom@0.7.13: this version is no longer supported, please update to at least 0.8.*
+npm warn deprecated @testing-library/jest-native@5.4.3: DEPRECATED: This package is no longer maintained.
+npm warn deprecated Please use the built-in Jest matchers available in @testing-library/react-native v12.4+.
+npm warn deprecated
+npm warn deprecated See migration guide: https://callstack.github.io/react-native-testing-library/docs/migration/jest-matchers
+npm warn deprecated uglify-es@3.3.10: support for ECMAScript is superseded by `uglify-js` as of v3.13.0
+
+added 1318 packages, and audited 1319 packages in 9s
+
+151 packages are looking for funding
+  run `npm fund` for details
+
+14 vulnerabilities (1 low, 2 moderate, 11 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+ios/ exists — attempting CocoaPods install
+pod install attempt 1/4
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 9c2f4b99bc7ddb95a8babff8ba78a4108aa0951243ea919166a7e2e279825502
+pod install failed — cleaning caches and retrying
+Trying arch -arm64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 9c2f4b99bc7ddb95a8babff8ba78a4108aa0951243ea919166a7e2e279825502
+Trying arch -x86_64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 9c2f4b99bc7ddb95a8babff8ba78a4108aa0951243ea919166a7e2e279825502
+Waiting before next attempt...
+pod install attempt 2/4
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 9c2f4b99bc7ddb95a8babff8ba78a4108aa0951243ea919166a7e2e279825502
+pod install failed — cleaning caches and retrying
+Trying arch -arm64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 9c2f4b99bc7ddb95a8babff8ba78a4108aa0951243ea919166a7e2e279825502
+Trying arch -x86_64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+[!] /usr/bin/curl -f -L -o /var/folders/ys/19ypl3p94rzbxssnktxj6nxr0000gn/T/d20251127-99437-ag7cjf/file.tbz https://github.com/boostorg/boost/releases/download/boost-1.76.0/boost_1_76_0.tar.bz2 --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.16.2 cocoapods-downloader/2.1'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     9    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) The requested URL returned error: 404
+Waiting before next attempt...
+pod install attempt 3/4
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+[!] /usr/bin/curl -f -L -o /var/folders/ys/19ypl3p94rzbxssnktxj6nxr0000gn/T/d20251127-99624-yblltp/file.tbz https://github.com/boostorg/boost/releases/download/boost-1.76.0/boost_1_76_0.tar.bz2 --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.16.2 cocoapods-downloader/2.1'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     9    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) The requested URL returned error: 404
+pod install failed — cleaning caches and retrying
+Trying arch -arm64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+[!] /usr/bin/curl -f -L -o /var/folders/ys/19ypl3p94rzbxssnktxj6nxr0000gn/T/d20251127-99693-pcqc9s/file.tbz https://github.com/boostorg/boost/releases/download/boost-1.76.0/boost_1_76_0.tar.bz2 --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.16.2 cocoapods-downloader/2.1'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     9    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) The requested URL returned error: 404
+Trying arch -x86_64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+[!] /usr/bin/curl -f -L -o /var/folders/ys/19ypl3p94rzbxssnktxj6nxr0000gn/T/d20251127-494-276g6x/file.tbz https://github.com/boostorg/boost/releases/download/boost-1.76.0/boost_1_76_0.tar.bz2 --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.16.2 cocoapods-downloader/2.1'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     9    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) The requested URL returned error: 404
+Waiting before next attempt...
+pod install attempt 4/4
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+[!] /usr/bin/curl -f -L -o /var/folders/ys/19ypl3p94rzbxssnktxj6nxr0000gn/T/d20251127-648-8wlal0/file.tbz https://github.com/boostorg/boost/releases/download/boost-1.76.0/boost_1_76_0.tar.bz2 --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.16.2 cocoapods-downloader/2.1'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     9    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) The requested URL returned error: 404
+pod install failed — cleaning caches and retrying
+Trying arch -arm64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+[!] /usr/bin/curl -f -L -o /var/folders/ys/19ypl3p94rzbxssnktxj6nxr0000gn/T/d20251127-731-97gyo2/file.tbz https://github.com/boostorg/boost/releases/download/boost-1.76.0/boost_1_76_0.tar.bz2 --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.16.2 cocoapods-downloader/2.1'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     9    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) The requested URL returned error: 404
+Trying arch -x86_64 pod install
+Using Expo modules
+[Expo] Enabling modular headers for pod ExpoModulesCore
+Auto-linking React Native module for target `thepaddlersmobile`: stripe-react-native
+Framework build type is static library
+[Codegen] Generating ./build/generated/ios/React-Codegen.podspec.json
+Updating local specs repositories
+Analyzing dependencies
+Fetching podspec for `DoubleConversion` from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`
+[Codegen] Found FBReactNativeSpec
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing safe_level with the 2nd argument of ERB.new is deprecated. Do not use it, and specify other arguments as keyword arguments.
+/Users/joetonytagore/Github/ThePaddlersApp/apps/mobile/node_modules/react-native/scripts/react_native_pods_utils/script_phases.rb:51: warning: Passing trim_mode with the 3rd argument of ERB.new is deprecated. Use keyword argument like ERB.new(str, trim_mode: ...) instead.
+Fetching podspec for `RCT-Folly` from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`
+Fetching podspec for `boost` from `../node_modules/react-native/third-party-podspecs/boost.podspec`
+Fetching podspec for `glog` from `../node_modules/react-native/third-party-podspecs/glog.podspec`
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+Downloading dependencies
+Installing DoubleConversion (1.1.6)
+Installing EXApplication (5.1.1)
+Installing EXConstants (14.2.1)
+Installing EXFileSystem (15.2.2)
+Installing EXFont (11.1.1)
+Installing EXSecureStore (12.1.1)
+Installing EXSplashScreen (0.18.2)
+Installing Expo (48.0.21)
+Installing ExpoKeepAwake (12.0.1)
+Installing ExpoModulesCore (1.2.7)
+Installing FBLazyVector (0.71.14)
+Installing FBReactNativeSpec (0.71.14)
+Installing RCT-Folly (2021.07.22.00)
+Installing RCTRequired (0.71.14)
+Installing RCTTypeSafety (0.71.14)
+Installing React (0.71.14)
+Installing React-Codegen (0.71.14)
+Installing React-Core (0.71.14)
+Installing React-CoreModules (0.71.14)
+Installing React-RCTActionSheet (0.71.14)
+Installing React-RCTAnimation (0.71.14)
+Installing React-RCTAppDelegate (0.71.14)
+Installing React-RCTBlob (0.71.14)
+Installing React-RCTImage (0.71.14)
+Installing React-RCTLinking (0.71.14)
+Installing React-RCTNetwork (0.71.14)
+Installing React-RCTSettings (0.71.14)
+Installing React-RCTText (0.71.14)
+Installing React-RCTVibration (0.71.14)
+Installing React-callinvoker (0.71.14)
+Installing React-cxxreact (0.71.14)
+Installing React-hermes (0.71.14)
+Installing React-jsi (0.71.14)
+Installing React-jsiexecutor (0.71.14)
+Installing React-jsinspector (0.71.14)
+Installing React-logger (0.71.14)
+Installing React-perflogger (0.71.14)
+Installing React-runtimeexecutor (0.71.14)
+Installing ReactCommon (0.71.14)
+Installing Stripe (23.3.4)
+Installing StripeApplePay (23.3.4)
+Installing StripeCore (23.3.4)
+Installing StripeFinancialConnections (23.3.4)
+Installing StripePaymentSheet (23.3.4)
+Installing StripePayments (23.3.4)
+Installing StripePaymentsUI (23.3.4)
+Installing StripeUICore (23.3.4)
+Installing Yoga (1.14.0)
+Installing boost (1.76.0)
+
+[!] Error installing boost
+[!] /usr/bin/curl -f -L -o /var/folders/ys/19ypl3p94rzbxssnktxj6nxr0000gn/T/d20251127-1468-2re221/file.tbz https://github.com/boostorg/boost/releases/download/boost-1.76.0/boost_1_76_0.tar.bz2 --create-dirs --netrc-optional --retry 2 -A 'CocoaPods/1.16.2 cocoapods-downloader/2.1'
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     9    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+curl: (56) The requested URL returned error: 404
+Waiting before next attempt...
+Falling back to Expo start (Expo Go in simulator)
+Starting project at /Users/joetonytagore/Github/ThePaddlersApp/apps/mobile
+Some dependencies are incompatible with the installed expo version:
+  @types/react@19.2.7 - expected version: ~18.0.27
+  typescript@5.9.3 - expected version: ^4.9.4
+Your project may not work correctly until you install the correct versions of the packages.
+Install individual packages by running npx expo install @types/react@~18.0.27 typescript@^4.9.4
+Starting Metro Bundler
+› Opening exp://192.168.29.43:19000 on iPhone 17 Pro
+CommandError: Device iPhone 17 Pro (AD679BC4-763E-4CD0-96FF-CF88EDA3E690) has no app to handle the URI: exp://192.168.29.43:19000
