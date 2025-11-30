@@ -15,8 +15,9 @@ import java.time.LocalDateTime
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import org.thepaddlers.Application
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = [Application::class], webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
 class ConcurrentReservationTest {
 
@@ -26,6 +27,7 @@ class ConcurrentReservationTest {
             withDatabaseName("thepaddlers_test")
             withUsername("test")
             withPassword("test")
+            withReuse(true) // Enable reuse for local dev reliability
         }
         const val RESERVATION_ENDPOINT = "/api/bookings"
     }
