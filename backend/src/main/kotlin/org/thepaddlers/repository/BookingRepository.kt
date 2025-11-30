@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.thepaddlers.model.Booking
 import java.time.LocalDateTime
-import javax.persistence.LockModeType
+import jakarta.persistence.LockModeType
 
 interface BookingRepository : JpaRepository<Booking, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
@@ -17,4 +17,3 @@ interface BookingRepository : JpaRepository<Booking, Long> {
         @Param("endTime") endTime: LocalDateTime
     ): List<Booking>
 }
-

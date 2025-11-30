@@ -1,11 +1,10 @@
 package org.thepaddlers.model
-)
-    val type: String
-    @Id val id: String,
-data class StripeEvent(
-@Entity
 
-import jakarta.persistence.Id
 import jakarta.persistence.Entity
+import jakarta.persistence.Id
 
-
+@Entity
+data class StripeEvent(
+    @Id val id: String,
+    val type: String
+)
