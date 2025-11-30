@@ -4,6 +4,7 @@
 - All secrets (API keys, DB passwords, Stripe keys) are stored in environment variables or secret managers.
 - Never commit secrets to source control.
 - Rotate secrets regularly and after any suspected leak.
+- Example environment files are provided as `.env.example` in each app folder. Never commit `.env` files with real secrets.
 
 ## Backup Schedule
 - Automated daily backups of the production database.
