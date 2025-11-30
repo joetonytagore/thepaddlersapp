@@ -4,5 +4,10 @@
   "private": true,
   "scripts": {
     "dev:frontends": "npx concurrently \"cd apps/web-admin && npm run dev -- --host\" \"cd apps/web-player && npm run dev -- --host --port 5174\""
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "jest": "^30.2.0"
   }
 }

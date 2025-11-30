@@ -1,10 +1,10 @@
 {
   "expo": {
     "ios": {
-      "bundleIdentifier": "com.anonymous.thepaddlers-mobile"
+      "bundleIdentifier": "com.thepaddlers.mobile"
     },
     "android": {
-      "package": "com.anonymous.thepaddlers-mobile"
+      "package": "com.thepaddlers.mobile"
     }
   }
 }

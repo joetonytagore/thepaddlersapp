@@ -5,6 +5,14 @@ import { getToken, setToken, authFetch } from './api'
 import CreateOrg from './CreateOrg'
 import CreateCourt from './CreateCourt'
 import AuditViewer from './AuditViewer'
+import Invoices from './Invoices'
+import BookingRuleManager from './BookingRuleManager'
+import ConcurrentBookingTest from './ConcurrentBookingTest';
+import MembershipManager from './MembershipManager';
+import POSManager from './POSManager';
+import InstructorScheduleManager from './InstructorScheduleManager';
+import EventManager from './EventManager';
+import Subscriptions from './Subscriptions';
 
 type Court = { id: number, name: string }
 
@@ -12,6 +20,7 @@ export default function App(){
   const [courts, setCourts] = useState<Court[]>([])
   const [loading, setLoading] = useState(false)
   const [authed, setAuthed] = useState(!!getToken())
+  const [showInvoices, setShowInvoices] = useState(false)
 
   useEffect(()=>{ if(authed) fetchCourts() },[authed])
 
@@ -64,6 +73,21 @@ export default function App(){
             <div className="mt-4">
               <AuditViewer orgId={1} />
             </div>
+            <div className="mt-4">
+              <button onClick={()=>setShowInvoices(s=>!s)} className="px-3 py-1 bg-gray-200 rounded">Toggle Invoices</button>
+            </div>
+            {showInvoices ? <div className="mt-4"><Invoices /></div> : null}
+            <div className="mt-4">
+              <Subscriptions />
+            </div>
+            <div className="mt-4">
+              <BookingRuleManager />
+            </div>
+            <ConcurrentBookingTest />
+            <MembershipManager />
+            <POSManager />
+            <InstructorScheduleManager />
+            <EventManager />
           </section>
 
         </main>

@@ -18,6 +18,8 @@ public class Membership {
     private OffsetDateTime currentPeriodEnd;
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
+    private Integer creditsRemaining = 0; // new: available booking credits for current period
+
     // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -37,5 +39,6 @@ public class Membership {
     public void setCurrentPeriodEnd(OffsetDateTime currentPeriodEnd) { this.currentPeriodEnd = currentPeriodEnd; }
     public OffsetDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
+    public Integer getCreditsRemaining() { return creditsRemaining; }
+    public void setCreditsRemaining(Integer creditsRemaining) { this.creditsRemaining = creditsRemaining; }
 }
-

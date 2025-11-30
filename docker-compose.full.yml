@@ -56,5 +56,63 @@ services:
     depends_on:
       - backend
 
+  # Mobile helper services: Metro (shared bundler), Android emulator (containerized),
+  # and a macOS-mounted helper for iOS simulator tasks. Note: iOS Simulator cannot run
+  # inside a Linux container; the helper service provides project files and runs Metro
+  # so the host macOS can build & launch the simulator.
+  mobile-metro:
+    image: node:18-bullseye
+    container_name: thepaddlers_mobile_metro
+    working_dir: /app
+    volumes:
+      - ./:/app:cached
+    ports:
+      - "19000:19000" # Expo (LAN)
+      - "19001:19001" # Expo tunnel
+      - "8081:8081"   # Metro
+    environment:
+      - NODE_ENV=development
+    command: sh -c "cd apps/mobile && yarn install --frozen-lockfile || true && yarn start --host 0.0.0.0"
+    networks:
+      - default
+
+  mobile-android-emulator:
+    image: budtmo/docker-android-x86-11.0
+    container_name: thepaddlers_android_emulator
+    privileged: true
+    shm_size: "2gb"
+    ports:
+      - "5555:5555" # adb
+      - "6080:6080" # VNC / web UI
+    volumes:
+      - /dev/kvm:/dev/kvm
+      - ./:/app:cached
+    environment:
+      - DEVICE=Android_SDK_built_for_x86_64
+      - ADB_SERVER_PORT=5555
+    networks:
+      - default
+
+  mobile-ios-sim:
+    image: node:18-bullseye
+    container_name: thepaddlers_ios_helper
+    working_dir: /app
+    volumes:
+      - ./:/app:cached
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - NODE_ENV=development
+    command: sh -c "cd apps/mobile && yarn install --frozen-lockfile || true && sleep infinity"
+    networks:
+      - default
+    # Note: iOS Simulator cannot run inside a Linux container. Use this service as a Metro/helper:
+    # - Start Metro via mobile-metro (or enter this container) and on your macOS host run:
+    #   xcrun simctl boot <device-udid> && npx react-native run-ios --udid <device-udid>
+    # The helper provides project files and scripts accessible to the host for building/launching the simulator.
+
 volumes:
   pgdata:
+
+networks:
+  default:
+    name: thepaddlers_default

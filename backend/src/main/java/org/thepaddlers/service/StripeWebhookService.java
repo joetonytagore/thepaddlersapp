@@ -25,16 +25,19 @@ public class StripeWebhookService {
     private final PaymentTransactionRepository txRepo;
     private final BookingRepository bookingRepo;
     private final AuditService auditService;
+    private final MembershipService membershipService;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public StripeWebhookService(@Value("${stripe.webhook.secret:}") String webhookSecret,
                                 PaymentTransactionRepository txRepo,
                                 BookingRepository bookingRepo,
-                                AuditService auditService) {
+                                AuditService auditService,
+                                MembershipService membershipService) {
         this.webhookSecret = webhookSecret;
         this.txRepo = txRepo;
         this.bookingRepo = bookingRepo;
         this.auditService = auditService;
+        this.membershipService = membershipService;
     }
 
     public boolean verifySignature(String sigHeader, String payload, long toleranceSeconds) {
@@ -171,6 +174,40 @@ public class StripeWebhookService {
                         audit.setEntityType("stripe_event");
                         audit.setEntityId(eventId);
                         audit.setDetails("ignored event type=" + type);
+                        auditService.record(audit);
+                    }
+                } else if ("invoice".equals(objMap.get("object"))) {
+                    // handle subscription/invoice events
+                    String invoiceId = (String) objMap.get("id");
+                    Object subObj = objMap.get("subscription");
+                    String subscriptionId = subObj != null ? String.valueOf(subObj) : null;
+                    Object paidObj = objMap.get("paid");
+                    boolean paid = paidObj instanceof Boolean ? (Boolean) paidObj : false;
+                    // period info
+                    long periodStart = 0;
+                    long periodEnd = 0;
+                    Object lines = objMap.get("lines");
+                    Object periodObj = objMap.get("period");
+                    Object periodStartObj = objMap.get("period_start");
+                    Object periodEndObj = objMap.get("period_end");
+                    if (periodStartObj instanceof Number) periodStart = ((Number) periodStartObj).longValue();
+                    if (periodEndObj instanceof Number) periodEnd = ((Number) periodEndObj).longValue();
+
+                    if ("invoice.payment_succeeded".equals(type) || ("invoice".equals(objMap.get("object")) && paid)) {
+                        if (subscriptionId != null) membershipService.handleInvoicePaid(subscriptionId, periodStart, periodEnd);
+                        AuditLog audit = new AuditLog();
+                        audit.setActionType("invoice.paid");
+                        audit.setEntityType("stripe_event");
+                        audit.setEntityId(eventId);
+                        audit.setDetails("invoice=" + invoiceId + " sub=" + subscriptionId);
+                        auditService.record(audit);
+                    } else if ("invoice.payment_failed".equals(type)) {
+                        if (subscriptionId != null) membershipService.handleInvoiceFailed(subscriptionId);
+                        AuditLog audit = new AuditLog();
+                        audit.setActionType("invoice.failed");
+                        audit.setEntityType("stripe_event");
+                        audit.setEntityId(eventId);
+                        audit.setDetails("invoice_failed=" + invoiceId + " sub=" + subscriptionId);
                         auditService.record(audit);
                     }
                 }

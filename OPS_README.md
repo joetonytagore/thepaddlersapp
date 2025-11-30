@@ -33,4 +33,10 @@ This runbook covers operational best practices for thePaddlers app: backups, mon
 - If keys are leaked: rotate Stripe keys, revoke AWS credentials, and update secrets store.
 - If data breach: follow legal obligations for notification and contain affected systems.
 
-
+## Security & Operations
+- See SECURITY.md for secret handling, backup, and deployment checklist.
+- Restore procedures: see infra/restore_runbook.md
+- Database retention: see SECURITY.md
+- All production deployments require a security scan (Dependabot/Snyk/Qodana).
+- Stripe keys and webhook secrets must be set via environment variables.
+- Demo/admin credentials must not be present in production.

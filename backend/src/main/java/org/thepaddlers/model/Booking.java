@@ -20,6 +20,9 @@ public class Booking {
 
     private String status = "CONFIRMED";
 
+    @Version
+    private Long version;
+
     // getters/setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

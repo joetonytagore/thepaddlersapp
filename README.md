@@ -177,3 +177,11 @@ npm test
 CI: there's a GitHub Actions workflow `.github/workflows/mobile-jest.yml` that runs the mobile tests on push/PR when files under `apps/mobile/**` change. It checks out the repo, sets up Node 18, and runs `npm run test:ci` in `apps/mobile` (the `test:ci` script installs dependencies then runs Jest). Note: this workflow uses `npm install` inside `test:ci` to avoid lockfile mismatches in this repo.
 
 Mobile payment flow: the mobile `BookingDetails` component now calls the backend `/api/payments/create-payment-intent` to create a Stripe PaymentIntent and uses `@stripe/stripe-react-native`'s `confirmPayment` to confirm the payment with the native CardField.
+
+## Feature Matrix
+See [FEATURES.md](FEATURES.md) for a list of implemented and planned features.
+
+## CI/CD
+- CI runs on all pushes and pull requests to `main` and `develop` branches.
+- Tests and linters are executed for backend and frontend.
+- See `.github/workflows/ci.yml` for details.

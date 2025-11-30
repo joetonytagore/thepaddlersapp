@@ -31,6 +31,8 @@ dependencies {
     // Use a widely-available Postgres JDBC driver version for compatibility
     runtimeOnly 'org.postgresql:postgresql:42.5.4'
     runtimeOnly 'com.h2database:h2:2.2.224'
+    // Springdoc OpenAPI for Swagger documentation
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.testcontainers:junit-jupiter:1.19.0'

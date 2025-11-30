@@ -4,17 +4,17 @@ This guide shows how to run the mobile app locally for native testing. The proje
 
 Summary / checklist
 - Install dependencies and set environment variables
-- (Optional) restore `app.config.js` from `app.config.js.bak`
+- Restore `app.config.js` from `app.config.js.bak` if missing
 - Prebuild native projects (use `npx` if `expo` is not installed globally)
 - Install CocoaPods for iOS
 - Start Metro in dev-client mode and run the simulator/emulator
-- (Optional) use the helper script `scripts/run-native.sh` to automate these steps and save logs
+- Use the helper script `scripts/run-native.sh` to automate steps and save logs
 
 Prerequisites
 - Node.js >= 16
 - npm or yarn
 - Xcode (macOS) for iOS simulator + CocoaPods (bundler optional)
-- Android SDK + emulator for Android
+- Android SDK + emulator for Android (or a physical device)
 - eas-cli (optional, for building dev clients / EAS builds): `npm install -g eas-cli`
 
 Important: prefer `npx` over a global `expo` install to avoid version drift. Examples below use `npx` when appropriate.
@@ -102,12 +102,12 @@ npx expo run:android
 
 6) EAS dev client builds (recommended for native SDKs)
 
-The repo already contains an `eas.json` scaffold. Use EAS secrets to provide the real publishable key when building on EAS:
+The repo contains an `eas.json` scaffold at `apps/mobile/eas.json`. Use EAS secrets to provide the real publishable key when building on EAS:
 
 ```bash
 # login once
 eas login
-# set the publishable key as a secret for EAS
+# set the publishable key as a secret for EAS (recommended)
 eas secret:create --name stripe_publishable_key --value "pk_test_..."
 # build a development client for iOS
 eas build --profile development --platform ios
@@ -115,43 +115,45 @@ eas build --profile development --platform ios
 eas build --profile development --platform android
 ```
 
-7) New helper: `scripts/run-native.sh`
+7) Helper: `scripts/run-native.sh`
 
-To simplify local runs I added a helper script at `scripts/run-native.sh` (relative to `apps/mobile/`). It automates:
-- npm install
+A helper script is available at `apps/mobile/scripts/run-native.sh`. It automates:
+- npm install (if node_modules not present)
 - npx expo prebuild --platform all
 - cd ios && pod install (if iOS exists)
-- start Metro in dev-client mode (background)
-- run the selected platform (ios|android)
-- save logs to `apps/mobile/logs/` with timestamps
+- run platform-specific runner (npx expo run:ios / npx expo run:android)
+- logs saved under `apps/mobile/logs/run-native-*.log`
 
-Usage (from repo root or `apps/mobile`):
+Usage (from repo root):
 
 ```bash
-# run the helper (defaults to ios). Run from project root:
+# run the helper (defaults to ios):
 ./apps/mobile/scripts/run-native.sh ios
 
 # or run android:
 ./apps/mobile/scripts/run-native.sh android
 
-# run both (prebuild + start metro only):
-./apps/mobile/scripts/run-native.sh both
+# run both (prebuild + pod install + run android + run ios):
+./apps/mobile/scripts/run-native.sh all
 
-# logs are written to apps/mobile/logs/
+# inspect logs
 ls apps/mobile/logs
 # tail the run output
-tail -f apps/mobile/logs/prebuild-*.log
+tail -f apps/mobile/logs/run-native-*.log
 ```
 
-8) Environment variables and sensitive keys
+8) App identifiers
 
-- Only put publishable Stripe keys in client env. Never store Stripe secret keys in client code or commit them.
-- For local testing, put your keys in `.env` (which is in `.gitignore`). For EAS builds use `eas secret:create` to inject secrets.
+The app bundle / package IDs were changed from `com.anonymous.thepaddlers-mobile` to `com.thepaddlers.thepaddlers-mobile`. If you need a different bundle id, set the env vars:
+- IOS_BUNDLE_IDENTIFIER
+- ANDROID_PACKAGE
 
 9) Troubleshooting
 - If you see `zsh: command not found: expo` — use `npx expo ...` or install the CLI: `npm install -g expo-cli`.
+- If you see `Constants.platform.ios.model has been deprecated` at runtime: it is a deprecation warning from `expo-constants`. It does not prevent the app from running; upgrade `expo-constants` or silence the warning in runtime code if you prefer.
 - If your native plugins (like `@stripe/stripe-react-native`) are not available in Expo Go, you must use a dev client or EAS-built binary.
-- If a build or run fails, save and paste the failing log lines here and I will help debug them.
+- For Android on macOS prefer using the host Android Studio emulator or a USB device — containerized emulators in docker are not generally supported on macOS.
+- If a build or run fails, paste the failing log lines here and I will help debug them.
 
 10) Want me to also run validations or change files?
-- I created `scripts/run-native.sh` for you. If you want, I can modify it (e.g., use `yarn` instead of `npm`, or add bundler support for CocoaPods). Say what you want changed and I'll update it.
+- I created the helper script and `eas.json`. If you want changes (use yarn instead of npm, change default bundle id, or adjust pod install behavior), tell me and I'll update the scripts.

@@ -1,6 +1,7 @@
 package org.thepaddlers.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class StripeWebhookController {
         this.webhookService = webhookService;
     }
 
+    @Timed(value = "webhook.stripe", description = "Time taken to process Stripe webhook")
     @PostMapping("/stripe")
     public ResponseEntity<?> handle(@RequestHeader(name = "Stripe-Signature", required = false) String sigHeader, @RequestBody Map<String, Object> payload) {
         try {

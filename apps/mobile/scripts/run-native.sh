@@ -1,80 +1,60 @@
 #!/usr/bin/env bash
 # apps/mobile/scripts/run-native.sh
-# Helper to automate: npm install -> expo prebuild -> pod install -> start metro -> run platform
-# Usage: ./scripts/run-native.sh [ios|android|both]
-
+# Helper to automate native prebuild, CocoaPods install and run for iOS/Android.
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$ROOT_DIR"
-
-PLATFORM=${1:-ios}
-TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
-LOG_DIR="$ROOT_DIR/logs"
+# Usage: ./run-native.sh [ios|android|all]
+TARGET=${1:-ios}
+# Resolve MOBILE_DIR relative to the script location to avoid duplicate path segments
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+MOBILE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+ROOT_DIR="$(cd "$MOBILE_DIR/.." && pwd)"
+LOG_DIR="$MOBILE_DIR/logs"
 mkdir -p "$LOG_DIR"
+TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+LOGFILE="$LOG_DIR/run-native-$TIMESTAMP.log"
 
-# Log files
-PREBUILD_LOG="$LOG_DIR/prebuild-$TIMESTAMP.log"
-POD_LOG="$LOG_DIR/pod-$TIMESTAMP.log"
-METRO_LOG="$LOG_DIR/metro-$TIMESTAMP.log"
-RUN_LOG="$LOG_DIR/run-$PLATFORM-$TIMESTAMP.log"
+echo "[run-native] Root: $ROOT_DIR"
+echo "[run-native] Mobile dir: $MOBILE_DIR"
+echo "[run-native] Log: $LOGFILE"
 
-echo "[run-native] Running for platform: $PLATFORM"
+cd "$MOBILE_DIR"
 
-echo "[run-native] 1) npm install"
-npm install 2>&1 | tee "$LOG_DIR/npm-install-$TIMESTAMP.log"
-
-if command -v npx >/dev/null 2>&1; then
-  NPX_CMD="npx"
+# Install JS deps if node_modules missing or package-lock changed
+if [ ! -d node_modules ]; then
+  echo "[run-native] Installing JS dependencies..." | tee -a "$LOGFILE"
+  npm install 2>&1 | tee -a "$LOGFILE"
 else
-  echo "[run-native] Warning: npx not found. Trying expo command directly."
-  NPX_CMD="expo"
+  echo "[run-native] Using existing node_modules" | tee -a "$LOGFILE"
 fi
 
-# Choose which platform(s) to prebuild for to avoid interactive prompts when config is missing
-if [ "$PLATFORM" = "ios" ]; then
-  PREBUILD_PLATFORMS="ios"
-elif [ "$PLATFORM" = "android" ]; then
-  PREBUILD_PLATFORMS="android"
-else
-  PREBUILD_PLATFORMS="all"
+# Expo prebuild (generates ios/ and android/ if needed)
+echo "[run-native] Running expo prebuild (platform: all)..." | tee -a "$LOGFILE"
+# Use npx so global expo cli is not required
+npx expo prebuild --platform all 2>&1 | tee -a "$LOGFILE"
+
+# CocoaPods install (iOS native deps)
+if [ "$TARGET" = "ios" ] || [ "$TARGET" = "all" ]; then
+  if [ -d ios ]; then
+    echo "[run-native] Installing CocoaPods (ios/)" | tee -a "$LOGFILE"
+    (cd ios && pod install --repo-update) 2>&1 | tee -a "$LOGFILE"
+  else
+    echo "[run-native] Warning: ios/ directory not found after prebuild" | tee -a "$LOGFILE"
+  fi
 fi
 
-echo "[run-native] 2) prebuild (platforms=$PREBUILD_PLATFORMS, logs -> $PREBUILD_LOG)"
-# run prebuild for the selected platforms
-$NPX_CMD expo prebuild --platform "$PREBUILD_PLATFORMS" 2>&1 | tee "$PREBUILD_LOG"
-
-# iOS pods
-if [ -d "$ROOT_DIR/ios" ] && [ "$PLATFORM" != "android" ]; then
-  echo "[run-native] 3) Installing CocoaPods (logs -> $POD_LOG)"
-  (cd "$ROOT_DIR/ios" && pod install) 2>&1 | tee "$POD_LOG"
+# Run iOS app
+if [ "$TARGET" = "ios" ]; then
+  echo "[run-native] Starting iOS (expo run:ios)..." | tee -a "$LOGFILE"
+  # Run via expo which will call the native runner; this requires Xcode / simulator available on host
+  npx expo run:ios 2>&1 | tee -a "$LOGFILE"
 fi
 
-# Start Metro in background
-echo "[run-native] 4) Starting Metro (dev-client) in background (logs -> $METRO_LOG)"
-# Use npx if available
-$NPX_CMD expo start --dev-client > "$METRO_LOG" 2>&1 &
-METRO_PID=$!
-# Give Metro a moment to start
-sleep 4
-
-# Run platform
-if [ "$PLATFORM" = "ios" ] || [ "$PLATFORM" = "both" ]; then
-  echo "[run-native] 5) Running iOS simulator (logs -> $RUN_LOG)"
-  $NPX_CMD expo run:ios 2>&1 | tee -a "$RUN_LOG"
+# Run Android app
+if [ "$TARGET" = "android" ] || [ "$TARGET" = "all" ]; then
+  echo "[run-native] Starting Android (expo run:android)..." | tee -a "$LOGFILE"
+  # Ensure an Android emulator is running or a device is connected
+  npx expo run:android 2>&1 | tee -a "$LOGFILE"
 fi
 
-if [ "$PLATFORM" = "android" ] || [ "$PLATFORM" = "both" ]; then
-  echo "[run-native] 6) Running Android emulator (logs -> $RUN_LOG)"
-  $NPX_CMD expo run:android 2>&1 | tee -a "$RUN_LOG"
-fi
-
-# Cleanup: stop Metro
-if ps -p $METRO_PID >/dev/null 2>&1; then
-  echo "[run-native] Stopping Metro (pid=$METRO_PID)"
-  kill $METRO_PID || true
-fi
-
-echo "[run-native] Done. Logs saved to: $LOG_DIR"
-
-exit 0
+echo "[run-native] Completed. Logs: $LOGFILE" | tee -a "$LOGFILE"

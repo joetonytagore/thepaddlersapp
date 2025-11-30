@@ -5,6 +5,12 @@
       "distribution": "internal",
       "env": {
         "STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key"
+      },
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
       }
     },
     "preview": {
@@ -16,8 +22,16 @@
     "production": {
       "env": {
         "STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key"
+      },
+      "ios": {
+        "simulator": false
+      },
+      "android": {
+        "buildType": "app-bundle"
       }
     }
+  },
+  "submit": {
+    "production": {}
   }
 }
-

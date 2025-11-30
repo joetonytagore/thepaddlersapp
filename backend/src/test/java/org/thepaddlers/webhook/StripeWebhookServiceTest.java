@@ -8,6 +8,7 @@ import org.thepaddlers.model.PaymentTransaction;
 import org.thepaddlers.repository.BookingRepository;
 import org.thepaddlers.repository.PaymentTransactionRepository;
 import org.thepaddlers.service.AuditService;
+import org.thepaddlers.service.MembershipService;
 import org.thepaddlers.service.StripeWebhookService;
 
 import java.util.Map;
@@ -21,6 +22,7 @@ public class StripeWebhookServiceTest {
     BookingRepository bookingRepo;
     PaymentTransactionRepository txRepo;
     AuditService auditService;
+    MembershipService membershipService;
 
     StripeWebhookService svc;
 
@@ -29,7 +31,8 @@ public class StripeWebhookServiceTest {
         bookingRepo = Mockito.mock(BookingRepository.class);
         txRepo = Mockito.mock(PaymentTransactionRepository.class);
         auditService = Mockito.mock(AuditService.class);
-        svc = new StripeWebhookService("whsec_test", txRepo, bookingRepo, auditService);
+        membershipService = Mockito.mock(MembershipService.class);
+        svc = new StripeWebhookService("whsec_test", txRepo, bookingRepo, auditService, membershipService);
     }
 
     @Test
@@ -78,4 +81,3 @@ public class StripeWebhookServiceTest {
         assertEquals("PAID", b.getStatus());
     }
 }
-

@@ -1,0 +1,39 @@
+name: Security Scan
+on:
+  schedule:
+    - cron: '0 3 * * 1' # weekly on Monday
+  workflow_dispatch:
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Qodana static analysis
+        uses: JetBrains/qodana-action@v2023.2
+        with:
+          project-dir: .
+          results-dir: qodana-report
+      - name: Upload Qodana report
+        uses: actions/upload-artifact@v4
+        with:
+          name: qodana-report
+          path: qodana-report
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions@v2
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - name: Run npm audit (web-admin)
+        run: |
+          cd apps/web-admin
+          npm audit --audit-level=moderate || true
+      - name: Run npm audit (web-player)
+        run: |
+          cd ../web-player
+          npm audit --audit-level=moderate || true
+      - name: Run gradle dependency check
+        run: |
+          ./gradlew dependencyCheckAnalyze || true
+        continue-on-error: true
+

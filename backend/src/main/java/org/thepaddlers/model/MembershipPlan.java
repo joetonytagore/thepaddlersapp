@@ -14,6 +14,7 @@ public class MembershipPlan {
     private Long priceCents;
     private String interval;
     private String stripePriceId;
+    private Integer creditsPerPeriod = 0; // new: how many booking credits this plan grants per billing period
     private OffsetDateTime createdAt = OffsetDateTime.now();
 
     // getters/setters
@@ -31,5 +32,6 @@ public class MembershipPlan {
     public void setStripePriceId(String stripePriceId) { this.stripePriceId = stripePriceId; }
     public OffsetDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(OffsetDateTime createdAt) { this.createdAt = createdAt; }
+    public Integer getCreditsPerPeriod() { return creditsPerPeriod; }
+    public void setCreditsPerPeriod(Integer creditsPerPeriod) { this.creditsPerPeriod = creditsPerPeriod; }
 }
-
