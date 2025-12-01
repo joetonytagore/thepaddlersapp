@@ -1,13 +1,12 @@
 plugins {
     id 'org.springframework.boot' version '3.2.6'
-    id 'io.spring.dependency-management' version '1.1.3'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
 }
 
 group = 'org.thepaddlers'
 version = '0.1.0'
-sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
@@ -29,8 +28,7 @@ dependencies {
     // JWT library for local auth tokens
     implementation 'com.auth0:java-jwt:4.4.0'
     // Use newer DB drivers to mitigate known CVEs
-    // Use a widely-available Postgres JDBC driver version for compatibility
-    runtimeOnly 'org.postgresql:postgresql:42.5.4'
+    runtimeOnly 'org.postgresql:postgresql:42.7.3'
     runtimeOnly 'com.h2database:h2:2.2.224'
     // Springdoc OpenAPI for Swagger documentation
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
@@ -43,8 +41,8 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'
-    testImplementation 'org.testcontainers:postgresql:1.19.7'
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.8'
+    testImplementation 'org.testcontainers:postgresql:1.19.8'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
@@ -63,7 +61,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     }
 }
 
-tasks.withType(Jar) {
+tasks.withType(Jar).configureEach {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 

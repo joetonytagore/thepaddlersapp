@@ -1,35 +1,36 @@
 package com.thepaddlers.league.services
 
 import com.thepaddlers.league.entities.Match
+import com.thepaddlers.league.entities.Tournament
 import com.thepaddlers.league.entities.TournamentBracket
 import com.thepaddlers.league.repositories.MatchRepository
+import com.thepaddlers.league.repositories.TournamentBracketRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
 @Service
 class TournamentService(
-    private val matchRepository: MatchRepository
+    private val matchRepository: MatchRepository,
+    private val tournamentBracketRepository: TournamentBracketRepository
 ) {
     @Transactional
     fun generateSingleElimBracket(
-        tournamentId: UUID,
+        organizationId: UUID,
+        tournament: Tournament,
         entrants: List<UUID>,
         seedList: List<UUID>? = null
-    ): TournamentBracket {
+    ) {
         val seeds = seedList ?: entrants.shuffled()
         val numPlayers = seeds.size
         val numRounds = Math.ceil(Math.log(numPlayers.toDouble()) / Math.log(2.0)).toInt()
-        val numMatches = numPlayers - 1
         val matches = mutableListOf<Match>()
-        val matchTree = mutableMapOf<Int, MutableList<Match>>()
         // Round 1
-        val round1 = mutableListOf<Match>()
         for (i in 0 until numPlayers / 2) {
             val m = Match(
                 id = UUID.randomUUID(),
-                organizationId = UUID.randomUUID(), // TODO: pass orgId if needed
-                league = null, // Not used for tournament
+                organizationId = organizationId,
+                league = null,
                 group = null,
                 player1Id = seeds[i * 2],
                 player2Id = seeds[i * 2 + 1],
@@ -39,40 +40,46 @@ class TournamentService(
                 winnerId = null,
                 createdAt = java.time.Instant.now()
             )
-            round1.add(m)
             matches.add(m)
+            matchRepository.save(m)
+            val bracket = TournamentBracket(
+                organizationId = organizationId,
+                tournament = tournament,
+                round = 1,
+                match = m
+            )
+            tournamentBracketRepository.save(bracket)
         }
-        matchTree[1] = round1
         // Future rounds
-        var prevRound = round1
+        var prevRoundMatches = matches
         for (r in 2..numRounds) {
-            val thisRound = mutableListOf<Match>()
-            for (i in 0 until prevRound.size / 2) {
+            val thisRoundMatches = mutableListOf<Match>()
+            for (i in 0 until prevRoundMatches.size / 2) {
                 val m = Match(
                     id = UUID.randomUUID(),
-                    organizationId = UUID.randomUUID(), // TODO: pass orgId if needed
+                    organizationId = organizationId,
                     league = null,
                     group = null,
-                    player1Id = UUID.randomUUID(), // Placeholder, will be winner of previous
-                    player2Id = UUID.randomUUID(), // Placeholder
+                    player1Id = UUID.randomUUID(),
+                    player2Id = UUID.randomUUID(),
                     scheduledTime = null,
                     completedTime = null,
                     status = "PENDING",
                     winnerId = null,
                     createdAt = java.time.Instant.now()
                 )
-                thisRound.add(m)
-                matches.add(m)
+                thisRoundMatches.add(m)
+                matchRepository.save(m)
+                val bracket = TournamentBracket(
+                    organizationId = organizationId,
+                    tournament = tournament,
+                    round = r,
+                    match = m
+                )
+                tournamentBracketRepository.save(bracket)
             }
-            matchTree[r] = thisRound
-            prevRound = thisRound
+            prevRoundMatches = thisRoundMatches
         }
-        matchRepository.saveAll(matches)
-        return TournamentBracket(
-            tournamentId = tournamentId,
-            matches = matches,
-            matchTree = matchTree
-        )
     }
 
     fun generateDoubleElimBracket(/* params */): TournamentBracket {
@@ -81,4 +88,3 @@ class TournamentService(
         throw NotImplementedError("Double elimination bracket not implemented yet")
     }
 }
-

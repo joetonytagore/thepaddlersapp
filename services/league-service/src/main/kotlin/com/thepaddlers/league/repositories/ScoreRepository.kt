@@ -6,4 +6,5 @@ import java.util.*
 
 interface ScoreRepository : JpaRepository<Score, UUID> {
     fun findByOrganizationId(organizationId: UUID): List<Score>
+    fun findByMatchLeagueId(leagueId: UUID): List<Score>
 }

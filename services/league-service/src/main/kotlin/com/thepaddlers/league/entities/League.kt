@@ -19,6 +19,7 @@ data class League(
     val startTime: Instant? = null,
     val endTime: Instant? = null,
     val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now()
+    val updatedAt: Instant = Instant.now(),
+    @Column(nullable = false)
+    val status: String = "ACTIVE"
 )
-

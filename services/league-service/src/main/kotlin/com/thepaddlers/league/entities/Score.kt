@@ -1,22 +1,23 @@
 package com.thepaddlers.league.entities
-)
-    val submittedAt: Instant = Instant.now()
-    val score: Int,
+
+import jakarta.persistence.*
+import java.time.Instant
+import java.util.*
+
+@Entity
+@Table(name = "scores")
+data class Score(
+    @Id
+    val id: UUID = UUID.randomUUID(),
+    @Column(nullable = false)
+    val organizationId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "match_id", nullable = false)
+    val match: Match,
+    @Column(nullable = false)
     val playerId: UUID,
     @Column(nullable = false)
-    val match: Match,
-    @JoinColumn(name = "match_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    val organizationId: UUID,
+    val score: Int,
     @Column(nullable = false)
-    val id: UUID = UUID.randomUUID(),
-    @Id
-data class Score(
-@Table(name = "scores")
-@Entity
-
-import java.util.*
-import java.time.Instant
-import jakarta.persistence.*
-
-
+    val submittedAt: Instant = Instant.now()
+)

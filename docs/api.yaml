@@ -1,96 +1,58 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
-  title: ThePaddlersApp API
+  title: Auth API
   version: 1.0.0
-  description: OpenAPI spec for backend endpoints
-servers:
-  - url: https://api.thepaddlers.com
 paths:
-  /api/webhooks/stripe:
+  /api/auth/login:
     post:
-      summary: Stripe webhook endpoint
-      description: Receives Stripe events, verifies signature, and processes payment events
+      summary: Login and receive JWT
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
-          description: Event processed
-        '400':
-          description: Invalid signature or missing header
-        '500':
-          description: Internal error
-      parameters:
-        - name: Stripe-Signature
-          in: header
-          required: false
-          schema:
-            type: string
-  /api/bookings:
+          description: JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+              example:
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  /api/auth/register:
     post:
-      summary: Create a booking
+      summary: Register new user (defaults to PLAYER)
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Booking'
-      responses:
-        '201':
-          description: Booking created
-        '409':
-          description: Time slot conflict
-    get:
-      summary: List bookings
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
       responses:
         '200':
-          description: List of bookings
-  /api/bookings/{id}:
-    get:
-      summary: Get booking by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Booking details
-        '404':
-          description: Not found
-components:
-  schemas:
-    Booking:
-      type: object
-      properties:
-        id:
-          type: integer
-        court:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-        user:
-          type: object
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            email:
-              type: string
-        startAt:
-          type: string
-          format: date-time
-        endAt:
-          type: string
-          format: date-time
-        status:
-          type: string
+          description: JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+              example:
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 

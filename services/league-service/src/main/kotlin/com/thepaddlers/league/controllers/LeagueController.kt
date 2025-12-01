@@ -5,6 +5,10 @@ import com.thepaddlers.league.services.LeagueService
 import com.thepaddlers.league.services.NotificationService
 import com.thepaddlers.league.services.StandingsService
 import com.thepaddlers.league.services.WaitlistService
+import com.thepaddlers.league.entities.NotificationLog
+import com.thepaddlers.league.services.StandingRow
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.validation.annotation.Validated
@@ -13,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile
 import java.util.*
 
 @RestController
+@Tag(name = "League", description = "League management endpoints")
 @RequestMapping("/orgs/{orgId}")
 class LeagueController(
     private val leagueService: LeagueService,
@@ -20,6 +25,7 @@ class LeagueController(
     private val standingsService: StandingsService,
     private val notificationService: NotificationService
 ) {
+    @Operation(summary = "Create a new league")
     @PreAuthorize("hasAnyRole('ADMIN','STAFF') and #orgId == principal.orgId")
     @PostMapping("/leagues")
     fun createLeague(
@@ -27,18 +33,22 @@ class LeagueController(
         @Validated @RequestBody request: CreateLeagueRequest
     ): ResponseEntity<LeagueResponse> {
         // TODO: Audit log: create league
-        return ResponseEntity.ok(/* leagueResponse */)
+        val sample = LeagueResponse(UUID.randomUUID(), request.name, request.description, request.format, request.startTime, request.endTime)
+        return ResponseEntity.ok(sample)
     }
 
+    @Operation(summary = "Get league details")
     @GetMapping("/leagues/{id}")
     fun getLeague(
         @PathVariable orgId: UUID,
         @PathVariable id: UUID
     ): ResponseEntity<LeagueResponse> {
         // TODO: Fetch league by id and orgId
-        return ResponseEntity.ok(/* leagueResponse */)
+        val sample = LeagueResponse(id, "Sample League", "desc", "format", "2025-01-01T00:00:00Z", "2025-01-31T00:00:00Z")
+        return ResponseEntity.ok(sample)
     }
 
+    @Operation(summary = "Generate schedule for the league")
     @PreAuthorize("hasAnyRole('ADMIN','STAFF') and #orgId == principal.orgId")
     @PostMapping("/leagues/{id}/generate-schedule")
     fun generateSchedule(
@@ -49,6 +59,7 @@ class LeagueController(
         return ResponseEntity.ok().build()
     }
 
+    @Operation(summary = "Enter a league")
     @PostMapping("/leagues/{id}/enter")
     fun enterLeague(
         @PathVariable orgId: UUID,
@@ -59,6 +70,7 @@ class LeagueController(
         return ResponseEntity.ok().build()
     }
 
+    @Operation(summary = "Submit score for a match")
     @PostMapping("/leagues/{id}/submit-score")
     fun submitScore(
         @PathVariable orgId: UUID,
@@ -69,6 +81,7 @@ class LeagueController(
         return ResponseEntity.ok().build()
     }
 
+    @Operation(summary = "Get league standings")
     @GetMapping("/leagues/{id}/standings")
     fun getStandings(
         @PathVariable orgId: UUID,
@@ -111,6 +124,7 @@ class LeagueController(
         return ResponseEntity.ok().build()
     }
 
+    @Operation(summary = "Import players from a file")
     @PostMapping("/leagues/{id}/import-players")
     fun importPlayers(
         @PathVariable orgId: UUID,
@@ -121,6 +135,7 @@ class LeagueController(
         return ResponseEntity.ok(summary)
     }
 
+    @Operation(summary = "Export league results")
     @GetMapping("/leagues/{id}/export-results")
     fun exportResults(
         @PathVariable orgId: UUID,

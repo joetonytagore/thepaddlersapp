@@ -1,5 +1,7 @@
 package com.thepaddlers.league.services
 
+import com.thepaddlers.league.entities.NotificationLog
+import com.thepaddlers.league.dto.MobilePushRegisterRequest
 import com.thepaddlers.league.repositories.NotificationLogRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -68,20 +70,3 @@ class NotificationService @Autowired constructor(
         // TODO: Store device push token for user/device
     }
 }
-
-data class NotificationLog(
-    val id: UUID,
-    val orgId: UUID,
-    val userId: UUID?,
-    val type: String,
-    val targetId: UUID?,
-    val sentAt: Instant,
-    val status: String,
-    val message: String?
-)
-
-data class MobilePushRegisterRequest(
-    val userId: UUID,
-    val deviceType: String,
-    val pushToken: String
-)

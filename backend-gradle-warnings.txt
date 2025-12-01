@@ -1,0 +1,17 @@
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/Users/joetonytagore/Github/ThePaddlersApp/build.gradle' line: 25
+
+* What went wrong:
+A problem occurred evaluating root project 'ThePaddlersApp'.
+> Project with path ':services:booking-service' could not be found in root project 'ThePaddlersApp'.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 895ms

@@ -38,7 +38,7 @@ class SchedulerService(
         val rounds = playerList.size - 1
         val matchesPerRound = playerList.size / 2
         val schedule = mutableListOf<Match>()
-        val matchSlotsPerDay = ((Duration.between(timeWindowStart, timeWindowEnd).toMinutes() / matchDurationMinutes) * courts).toInt()
+        val matchSlotsPerDay = ((Duration.between(timeWindowStart, timeWindowEnd).toMinutes().toLong() / matchDurationMinutes.toLong()) * courts.toLong()).toInt()
         var currentDate = startDate
         var slotIndex = 0
         var dayIndex = 0
@@ -59,7 +59,7 @@ class SchedulerService(
                 // Find next available slot
                 val dayOfWeek = daysOfWeek[dayIndex % daysOfWeek.size]
                 while (currentDate.dayOfWeek != dayOfWeek) currentDate = currentDate.plusDays(1)
-                val slotTime = timeWindowStart.plusMinutes(((slotIndex % matchSlotsPerDay) / courts) * matchDurationMinutes)
+                val slotTime = timeWindowStart.plusMinutes((((slotIndex % matchSlotsPerDay) / courts) * matchDurationMinutes).toLong())
                 val scheduledTime = currentDate.atTime(slotTime)
                 val match = Match(
                     id = UUID.randomUUID(),

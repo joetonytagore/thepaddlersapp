@@ -18,23 +18,3 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
-// Ensure booking-service's ResolveMainClassName task depends on backend outputs to avoid
-// Gradle's implicit dependency validation errors when booking-service is mapped to the
-// same directory as the legacy backend project (configured in settings.gradle).
-project(':services:booking-service') {
-    // Configure once if the task exists; use named to defer configuration until the task is added.
-    tasks.matching { it.name == 'resolveMainClassName' }.configureEach {
-        dependsOn(project(':backend').tasks.named('compileJava'))
-        dependsOn(project(':backend').tasks.named('processResources'))
-    }
-
-    // Also ensure the booking-service 'jar' task has explicit dependencies on the backend
-    // compile and resource outputs. Gradle reports the 'jar' task uses backend build outputs
-    // without declaring a dependency which can lead to ordering issues; declare dependsOn
-    // so the tasks run in the correct order.
-    tasks.matching { it.name == 'jar' }.configureEach {
-        dependsOn(project(':backend').tasks.named('compileJava'))
-        dependsOn(project(':backend').tasks.named('processResources'))
-    }
-}

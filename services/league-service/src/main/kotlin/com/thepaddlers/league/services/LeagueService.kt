@@ -5,16 +5,19 @@ import com.thepaddlers.league.dto.ScoreEntry
 import com.thepaddlers.league.dto.MobileLeagueSummary
 import com.thepaddlers.league.dto.MobileCheckinRequest
 import com.thepaddlers.league.dto.MobileSubmitScoreRequest
+import com.thepaddlers.league.dto.MobileActionResult
 import com.thepaddlers.league.entities.Match
 import com.thepaddlers.league.entities.Score
 import com.thepaddlers.league.repositories.MatchRepository
 import com.thepaddlers.league.repositories.ScoreRepository
+import com.thepaddlers.league.repositories.LeagueRepository
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.dao.OptimisticLockingFailureException
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
+import org.springframework.web.multipart.MultipartFile
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.time.Instant
@@ -25,15 +28,12 @@ import java.util.regex.Pattern
 class LeagueService(
     private val matchRepository: MatchRepository,
     private val scoreRepository: ScoreRepository,
+    private val leagueRepository: LeagueRepository,
     private val eventPublisher: ApplicationEventPublisher
 ) {
     @Transactional
     fun generateSchedule(leagueId: UUID, format: String) {
-        // TODO: Implement round-robin and ladder scheduling logic
-        // For round-robin: generate all possible matches between players
-        // For ladder: implement ladder reshuffling rules
-        // Server-side validation: org scoping, time windows, capacity checks
-        val league = /* fetch league by leagueId */
+        val league = leagueRepository.findById(leagueId).orElse(null)
         if (league == null) throw ResponseStatusException(HttpStatus.NOT_FOUND, "League not found")
         if (league.status != "ACTIVE") throw ResponseStatusException(HttpStatus.CONFLICT, "Schedule already generated")
         // TODO: Validate time windows and capacity
@@ -41,7 +41,7 @@ class LeagueService(
 
     @Transactional
     fun enterLeague(leagueId: UUID, playerId: UUID) {
-        val league = /* fetch league by leagueId */
+        val league = leagueRepository.findById(leagueId).orElse(null)
         if (league == null) throw ResponseStatusException(HttpStatus.NOT_FOUND, "League not found")
         // TODO: Check org scoping
         // TODO: Capacity check
@@ -150,12 +150,12 @@ class LeagueService(
 
     fun mobileCheckinMatch(matchId: UUID, request: MobileCheckinRequest): MobileActionResult {
         // TODO: Validate, record check-in, compute next action
-        return MobileActionResult(true, "Checked in", "submit-score")
+        return MobileActionResult(ok = true, msg = "Checked in", na = "submit-score")
     }
 
     fun mobileSubmitScore(matchId: UUID, request: MobileSubmitScoreRequest): MobileActionResult {
         // TODO: Validate, record score, compute next action
-        return MobileActionResult(true, "Score submitted", "view-standings")
+        return MobileActionResult(ok = true, msg = "Score submitted", na = "view-standings")
     }
 }
 
@@ -170,4 +170,3 @@ class MatchScoreSubmittedEvent(
 
 data class ImportPlayerResult(val row: Int, val raw: String, val status: String)
 data class ImportSummary(val results: List<ImportPlayerResult>)
-data class MobileActionResult(val success: Boolean, val message: String, val nextAction: String?)

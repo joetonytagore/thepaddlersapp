@@ -1,0 +1,125 @@
+Configuring project ':services:booking-service' without an existing directory is deprecated. The configured projectDirectory '/Users/joetonytagore/Github/ThePaddlersApp/services/booking-service' does not exist, can't be written to or is not a directory. This behavior has been deprecated. This will fail with an error in Gradle 9.0. Make sure the project directory exists and can be written. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#deprecated_missing_project_directory
+
+> Configure project :backend
+The org.gradle.api.plugins.Convention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#deprecated_access_to_conventions
+Build file '/Users/joetonytagore/Github/ThePaddlersApp/backend/build.gradle': line 10
+The org.gradle.api.plugins.JavaPluginConvention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#java_convention_deprecation
+	at build_ea4dndj2nggnf6z6emyl56fn2.run(/Users/joetonytagore/Github/ThePaddlersApp/backend/build.gradle:10)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Task :services:league-service:processResources UP-TO-DATE
+> Task :services:league-service:processTestResources NO-SOURCE
+
+> Task :services:league-service:compileKotlin FAILED
+The LenientConfiguration.getArtifacts(Spec) method has been deprecated. This is scheduled to be removed in Gradle 9.0. Use a lenient ArtifactView with a componentFilter instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#deprecate_filtered_configuration_file_and_filecollection_methods
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/controllers/LeagueController.kt:30:16 Type mismatch: inferred type is ResponseEntity.BodyBuilder! but ResponseEntity<LeagueResponse> was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/controllers/LeagueController.kt:39:16 Type mismatch: inferred type is ResponseEntity.BodyBuilder! but ResponseEntity<LeagueResponse> was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/controllers/LeagueController.kt:77:28 Unresolved reference: StandingRow
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/controllers/LeagueController.kt:137:28 Unresolved reference: NotificationLog
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/controllers/LeagueController.kt:193:31 Type mismatch: inferred type is com.thepaddlers.league.services.MobileActionResult! but com.thepaddlers.league.dto.MobileActionResult! was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/controllers/LeagueController.kt:202:31 Type mismatch: inferred type is com.thepaddlers.league.services.MobileActionResult! but com.thepaddlers.league.dto.MobileActionResult! was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/controllers/LeagueController.kt:209:53 Type mismatch: inferred type is com.thepaddlers.league.dto.MobilePushRegisterRequest but com.thepaddlers.league.services.MobilePushRegisterRequest was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:3:1 Expecting a top level declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:7:1 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:7:8 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:7:12 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:7:13 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:7:17 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:7:18 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:1 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:8 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:11 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:12 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:27 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:32 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:33 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:36 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:37 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:47 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:8:48 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:1 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:8 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:11 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:12 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:23 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:24 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:30 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:31 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:39 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:40 Expecting member declaration
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:9:47 Missing '}
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:4:5 Function 'findByOrganizationId' must have a body
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:4:46 Unresolved reference: UUID
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:4:58 Unresolved reference: Checkin
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:5:31 Unresolved reference: JpaRepository
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:5:45 Unresolved reference: Checkin
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/repositories/CheckinRepository.kt:5:54 Unresolved reference: UUID
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/security/JwtFilter.kt:8:14 Unresolved reference: servlet
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/security/JwtFilter.kt:9:14 Unresolved reference: servlet
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/security/JwtFilter.kt:10:14 Unresolved reference: servlet
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/security/JwtFilter.kt:13:44 Unresolved reference: HttpServletRequest
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/security/JwtFilter.kt:13:74 Unresolved reference: HttpServletResponse
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/security/JwtFilter.kt:13:108 Unresolved reference: FilterChain
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/security/SecurityConfig.kt:19:14 Unresolved reference: antMatchers
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/LeagueService.kt:37:9 'if' must have both main and 'else' branches if used as an expression
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/LeagueService.kt:37:13 Unresolved reference: league
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/LeagueService.kt:38:20 Unresolved reference: status
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/LeagueService.kt:45:9 'if' must have both main and 'else' branches if used as an expression
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/LeagueService.kt:45:13 Unresolved reference: league
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/LeagueService.kt:108:58 Unresolved reference: MultipartFile
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/NotificationService.kt:18:13 Type mismatch: inferred type is com.thepaddlers.league.services.NotificationLog! but com.thepaddlers.league.entities.NotificationLog! was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/NotificationService.kt:34:13 Type mismatch: inferred type is com.thepaddlers.league.services.NotificationLog! but com.thepaddlers.league.entities.NotificationLog! was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/NotificationService.kt:50:13 Type mismatch: inferred type is com.thepaddlers.league.services.NotificationLog! but com.thepaddlers.league.entities.NotificationLog! was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/NotificationService.kt:64:16 Type mismatch: inferred type is List<com.thepaddlers.league.entities.NotificationLog> but List<com.thepaddlers.league.services.NotificationLog> was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/SchedulerService.kt:62:60 Type mismatch: inferred type is Int but Long was expected
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:25:39 Unresolved reference: findByLeagueId
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:26:38 Unresolved reference: findByMatchLeagueId
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:28:50 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:28:64 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:30:42 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:30:65 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:31:40 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:32:42 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:32:71 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:33:44 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:33:73 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:33:109 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:42:39 Unresolved reference: findByLeagueId
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:43:38 Unresolved reference: findByMatchLeagueId
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:45:50 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:45:64 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:47:42 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:47:65 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:48:40 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:49:42 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:49:71 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:50:44 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:50:73 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/StandingsService.kt:50:109 Unresolved reference: it
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:32:26 Null can not be a value of a non-null type League
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:54:30 Null can not be a value of a non-null type League
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:72:13 Cannot find a parameter with this name: tournamentId
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:73:13 Cannot find a parameter with this name: matches
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:74:13 Cannot find a parameter with this name: matchTree
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:74:13 No value passed for parameter 'organizationId'
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:74:13 No value passed for parameter 'tournament'
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:74:13 No value passed for parameter 'round'
+e: file:///Users/joetonytagore/Github/ThePaddlersApp/services/league-service/src/main/kotlin/com/thepaddlers/league/services/TournamentService.kt:74:13 No value passed for parameter 'match'
+
+[Incubating] Problems report is available at: file:///Users/joetonytagore/Github/ThePaddlersApp/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':services:league-service:compileKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1s
+2 actionable tasks: 1 executed, 1 up-to-date

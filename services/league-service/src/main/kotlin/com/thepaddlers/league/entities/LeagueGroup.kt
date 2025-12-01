@@ -1,19 +1,18 @@
 package com.thepaddlers.league.entities
-)
-    val name: String
-    @Column(nullable = false)
-    val league: League,
-    @JoinColumn(name = "league_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
-    val organizationId: UUID,
-    @Column(nullable = false)
-    val id: UUID = UUID.randomUUID(),
-    @Id
-data class LeagueGroup(
-@Table(name = "league_groups")
-@Entity
 
-import java.util.*
 import jakarta.persistence.*
+import java.util.*
 
-
+@Entity
+@Table(name = "league_groups")
+data class LeagueGroup(
+    @Id
+    val id: UUID = UUID.randomUUID(),
+    @Column(nullable = false)
+    val organizationId: UUID,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "league_id", nullable = false)
+    val league: League,
+    @Column(nullable = false)
+    val name: String
+)

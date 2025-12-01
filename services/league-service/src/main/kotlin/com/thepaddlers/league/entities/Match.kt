@@ -13,7 +13,7 @@ data class Match(
     val organizationId: UUID,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "league_id", nullable = false)
-    val league: League,
+    val league: League? = null,
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     val group: LeagueGroup? = null,
@@ -28,4 +28,3 @@ data class Match(
     val winnerId: UUID? = null,
     val createdAt: Instant = Instant.now()
 )
-
