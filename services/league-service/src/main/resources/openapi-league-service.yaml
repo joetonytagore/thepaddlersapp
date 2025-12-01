@@ -1,0 +1,309 @@
+openapi: 3.0.3
+info:
+  title: League Service API
+  version: 1.0.0
+  description: API documentation for new endpoints in the League & Tournaments module
+servers:
+  - url: /api
+paths:
+  /orgs/{orgId}/leagues:
+    post:
+      summary: Create a new league
+      tags: [League]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLeagueRequest'
+      responses:
+        '200':
+          description: League created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeagueResponse'
+        '400': { description: Validation error }
+        '403': { description: Forbidden }
+  /orgs/{orgId}/leagues/{id}/generate-schedule:
+    post:
+      summary: Generate schedule for a league
+      tags: [League]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200': { description: Schedule generated }
+        '403': { description: Forbidden }
+        '409': { description: Conflict }
+  /orgs/{orgId}/matches/{matchId}/checkin:
+    post:
+      summary: Check-in for a match
+      tags: [Match]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckinRequest'
+      responses:
+        '200': { description: Check-in successful }
+        '400': { description: Validation error }
+        '403': { description: Forbidden }
+  /orgs/{orgId}/matches/{matchId}/submit-score:
+    post:
+      summary: Submit score for a match
+      tags: [Match]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitScoreRequest'
+      responses:
+        '200': { description: Score submitted }
+        '400': { description: Validation error }
+        '403': { description: Forbidden }
+        '409': { description: Conflict }
+  /orgs/{orgId}/leagues/{id}/import-players:
+    post:
+      summary: Import players via CSV
+      tags: [League]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200': { description: Import summary }
+        '400': { description: Validation error }
+        '403': { description: Forbidden }
+  /orgs/{orgId}/leagues/{id}/export-results:
+    get:
+      summary: Export league results
+      tags: [League]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: format
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [dupr, csv]
+      responses:
+        '200': { description: Exported results }
+        '403': { description: Forbidden }
+  /orgs/{orgId}/waitlist:
+    post:
+      summary: Join waitlist
+      tags: [Waitlist]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JoinWaitlistRequest'
+      responses:
+        '200': { description: Waitlist entry created }
+        '400': { description: Validation error }
+        '403': { description: Forbidden }
+  /orgs/{orgId}/waitlist/{id}/offer-accept:
+    post:
+      summary: Accept waitlist offer
+      tags: [Waitlist]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcceptOfferRequest'
+      responses:
+        '200': { description: Offer accepted }
+        '400': { description: Validation error }
+        '403': { description: Forbidden }
+  /orgs/{orgId}/leagues/{id}/standings:
+    get:
+      summary: Get league standings
+      tags: [League]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: method
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [win, points]
+      responses:
+        '200': { description: Standings list }
+        '403': { description: Forbidden }
+  /orgs/{orgId}/data-request:
+    delete:
+      summary: Request deletion of org data (compliance)
+      tags: [Compliance]
+      parameters:
+        - name: orgId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200': { description: Data deletion requested }
+        '403': { description: Forbidden }
+components:
+  schemas:
+    CreateLeagueRequest:
+      type: object
+      properties:
+        name: { type: string }
+        format: { type: string }
+        description: { type: string }
+        startTime: { type: string, format: date-time }
+        endTime: { type: string, format: date-time }
+      required: [name, format]
+    LeagueResponse:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        format: { type: string }
+        description: { type: string }
+        startTime: { type: string, format: date-time }
+        endTime: { type: string, format: date-time }
+        status: { type: string }
+    CheckinRequest:
+      type: object
+      properties:
+        userId: { type: string, format: uuid }
+        deviceId: { type: string }
+      required: [userId, deviceId]
+    SubmitScoreRequest:
+      type: object
+      properties:
+        submittedByUserId: { type: string, format: uuid }
+        score:
+          type: array
+          items:
+            type: object
+            properties:
+              playerId: { type: string, format: uuid }
+              points: { type: integer }
+            required: [playerId, points]
+        notes: { type: string }
+      required: [submittedByUserId, score]
+    JoinWaitlistRequest:
+      type: object
+      properties:
+        queueableType: { type: string, enum: [LEAGUE_EVENT, TOURNAMENT, MATCH] }
+        queueableId: { type: string, format: uuid }
+        userId: { type: string, format: uuid }
+      required: [queueableType, queueableId, userId]
+    AcceptOfferRequest:
+      type: object
+      properties:
+        userId: { type: string, format: uuid }
+      required: [userId]
+

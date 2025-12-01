@@ -1,58 +1,77 @@
-import React, {useState} from 'react'
-import { View, Text, Button } from 'react-native'
-import Login from './src/Login'
-import { getToken, setToken } from './src/api'
-import CourtsList from './src/CourtsList'
-import BookingsList from './src/BookingsList'
-import BookCourt from './src/BookCourt'
-import BookingDetails from './src/BookingDetails'
-import PaymentScreen from './src/PaymentScreen'
-import { StripeProvider } from '@stripe/stripe-react-native'
-import { STRIPE_PUBLISHABLE_KEY } from './src/config'
-import Constants from 'expo-constants'
+import React, { useState } from 'react';
+import { View, TextInput, Button, Text } from 'react-native';
+import * as SecureStore from 'expo-secure-store';
+import * as Notifications from 'expo-notifications';
 
-export default function App(){
-  const [authed,setAuthed] = useState(false)
-  const [screen,setScreen] = useState<'courts'|'bookings'|'bookCourt'|'details'|'payment'>('courts')
-  const [selectedBooking,setSelectedBooking] = useState<any|null>(null)
+const API_BASE = 'https://your-api.example.com/api';
 
-  React.useEffect(()=>{
-    (async ()=>{
-      const t = await getToken()
-      if(t) setAuthed(true)
-    })()
-  },[])
+async function login(email: string, password: string) {
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await res.json();
+  await SecureStore.setItemAsync('accessToken', data.accessToken);
+  await SecureStore.setItemAsync('refreshToken', data.refreshToken);
+  return data;
+}
 
-  if(!authed) return <Login onLogin={()=>setAuthed(true)} />
+async function registerDevice(userId: string) {
+  const pushToken = (await Notifications.getExpoPushTokenAsync()).data;
+  await fetch(`${API_BASE}/devices`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      deviceId: 'expo-device-id',
+      platform: 'expo',
+      pushToken,
+      appVersion: '1.0.0',
+      userId,
+    }),
+  });
+}
 
-  // Detect if running inside Expo Go (no custom native modules available)
-  const appOwnership = (Constants && (Constants as any).appOwnership) || null
-  const runningInExpoGo = appOwnership === 'expo' || appOwnership === 'expo-go'
+async function createBooking(courtId: number, userId: string, startIso: string, endIso: string) {
+  const accessToken = await SecureStore.getItemAsync('accessToken');
+  await fetch(`${API_BASE}/bookings`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ courtId, userId, startIso, endIso }),
+  });
+}
 
-  const AppContents = (
-    <View style={{flex:1}}>
-      <View style={{flexDirection:'row',justifyContent:'space-around',padding:8}}>
-        <Button title="Courts" onPress={()=>setScreen('courts')} />
-        <Button title="Bookings" onPress={()=>setScreen('bookings')} />
-        <Button title="Book" onPress={()=>setScreen('bookCourt')} />
-        <Button title="Logout" onPress={async ()=>{ await setToken(null); setAuthed(false) }} />
-      </View>
-      {screen === 'courts' && <CourtsList onLogout={async ()=>{ await setToken(null); setAuthed(false) }} />}
-      {screen === 'bookings' && <BookingsList onBack={()=>setScreen('courts')} />}
-      {screen === 'bookCourt' && <BookCourt onBooked={(b)=>{ setSelectedBooking(b); setScreen('details') }} onCancel={()=>setScreen('courts')} />}
-      {screen === 'details' && selectedBooking && <BookingDetails booking={selectedBooking} onCancel={()=>{ setSelectedBooking(null); setScreen('bookings') }} onNativePay={()=>setScreen('payment')} />}
-      {screen === 'payment' && selectedBooking && <PaymentScreen booking={selectedBooking} onDone={()=>setScreen('bookings')} />}
-    </View>
-  )
-
-  // Only initialize StripeProvider when not running under Expo Go (to avoid missing native module crashes)
-  if(runningInExpoGo){
-    return AppContents
-  }
+export default function App() {
+  const [email, setEmail] = useState('demo@paddlers.test');
+  const [password, setPassword] = useState('testpass');
+  const [userId, setUserId] = useState('');
+  const [msg, setMsg] = useState('');
 
   return (
-    <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
-      {AppContents}
-    </StripeProvider>
-  )
+    <View style={{ padding: 16 }}>
+      <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={{borderWidth:1,marginBottom:8,padding:8}} />
+      <TextInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry style={{borderWidth:1,marginBottom:8,padding:8}} />
+      <Button
+        title="Login"
+        onPress={async () => {
+          const data = await login(email, password);
+          setUserId(data.user.id);
+          setMsg('Logged in!');
+          await registerDevice(data.user.id);
+        }}
+      />
+      <Button
+        title="Create Booking"
+        onPress={async () => {
+          await createBooking(1, userId, new Date().toISOString(), new Date(Date.now() + 3600000).toISOString());
+          setMsg('Booking created!');
+        }}
+      />
+      <Text style={{marginTop:16}}>{msg}</Text>
+    </View>
+  );
 }
+

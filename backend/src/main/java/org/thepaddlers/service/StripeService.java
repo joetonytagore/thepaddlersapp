@@ -174,4 +174,18 @@ public class StripeService {
             throw new RuntimeException("Stripe API returned status=" + resp.statusCode() + " body=" + resp.body());
         }
     }
+
+    /**
+     * Create a PaymentIntent via Stripe REST API. Returns the client_secret for mobile payment flow.
+     */
+    public String createPaymentIntent(Map<String, Object> params) throws Exception {
+        Long amount = params.get("amount") instanceof Number ? ((Number) params.get("amount")).longValue() : Long.parseLong(params.get("amount").toString());
+        String currency = params.getOrDefault("currency", "usd").toString();
+        Object result = createPaymentIntent(amount, currency);
+        if (result instanceof Map) {
+            Object clientSecret = ((Map<?,?>)result).get("client_secret");
+            return clientSecret != null ? clientSecret.toString() : null;
+        }
+        return null;
+    }
 }

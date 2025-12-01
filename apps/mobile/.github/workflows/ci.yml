@@ -1,0 +1,27 @@
+name: Mobile E2E CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies
+        run: npm install
+        working-directory: apps/mobile
+      - name: Install Detox CLI
+        run: npm install -g detox-cli
+      - name: Build app for testing
+        run: npx expo prebuild && npx expo run:android --no-install
+        working-directory: apps/mobile
+      - name: Run Detox E2E tests
+        run: npx detox test --configuration android.emu.debug
+        working-directory: apps/mobile
+

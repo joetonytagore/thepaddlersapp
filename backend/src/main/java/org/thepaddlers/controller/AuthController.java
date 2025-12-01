@@ -7,6 +7,8 @@ import org.thepaddlers.model.User;
 import org.thepaddlers.repository.UserRepository;
 import org.thepaddlers.security.JwtService;
 import org.thepaddlers.api.dto.ErrorResponse;
+import org.thepaddlers.service.TokenService;
+import org.thepaddlers.model.RefreshToken;
 
 import java.net.URI;
 import java.util.Map;
@@ -20,10 +22,12 @@ import jakarta.servlet.http.HttpServletRequest;
 public class AuthController {
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final TokenService tokenService;
 
-    public AuthController(UserRepository userRepository, JwtService jwtService) {
+    public AuthController(UserRepository userRepository, JwtService jwtService, TokenService tokenService) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
+        this.tokenService = tokenService;
     }
 
     @PostMapping("/signup")
@@ -46,17 +50,18 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> body, HttpServletRequest request) {
         String email = body.get("email");
-        if (email == null) {
+        String password = body.get("password");
+        if (email == null || password == null) {
             Map<String, Object> resp = new HashMap<>();
             resp.put("status", 400);
             resp.put("error", "Bad Request");
-            resp.put("message", "email required");
+            resp.put("message", "email and password required");
             resp.put("path", request.getRequestURI());
             resp.put("code", "AUTH_BAD_REQUEST");
             return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON).body(resp);
         }
         Optional<User> u = userRepository.findByEmail(email);
-        if (u.isEmpty()) {
+        if (u.isEmpty() || !u.get().getPasswordHash().equals(password)) {
             Map<String, Object> resp = new HashMap<>();
             resp.put("status", 401);
             resp.put("error", "Unauthorized");
@@ -65,14 +70,38 @@ public class AuthController {
             resp.put("code", "AUTH_INVALID_CREDENTIALS");
             return ResponseEntity.status(401).contentType(MediaType.APPLICATION_JSON).body(resp);
         }
-        // Issue a JWT for local/dev testing
-        String token = jwtService.issueToken(Map.of("email", u.get().getEmail()), String.valueOf(u.get().getId()));
-        return ResponseEntity.ok(Map.of("token", token, "user", u.get()));
+        User user = u.get();
+        String accessToken = jwtService.issueToken(Map.of("email", user.getEmail()), String.valueOf(user.getId()));
+        RefreshToken refreshToken = tokenService.issueRefreshToken(user);
+        long expiresIn = 15 * 60; // 15 min in seconds
+        return ResponseEntity.ok(Map.of(
+            "accessToken", accessToken,
+            "refreshToken", refreshToken.getToken(),
+            "expiresIn", expiresIn,
+            "user", user
+        ));
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<?> refresh(@RequestBody Map<String, String> body) {
-        return ResponseEntity.ok(Map.of("token", "refreshed-dev-token"));
+        String refreshTokenValue = body.get("refreshToken");
+        if (refreshTokenValue == null) {
+            return ResponseEntity.status(400).body(Map.of("error", "refreshToken required"));
+        }
+        Optional<RefreshToken> tokenOpt = tokenService.verifyRefreshToken(refreshTokenValue);
+        if (tokenOpt.isEmpty()) {
+            return ResponseEntity.status(401).body(Map.of("error", "invalid or expired refresh token"));
+        }
+        RefreshToken oldToken = tokenOpt.get();
+        RefreshToken newToken = tokenService.rotateRefreshToken(oldToken);
+        User user = oldToken.getUser();
+        String accessToken = jwtService.issueToken(Map.of("email", user.getEmail()), String.valueOf(user.getId()));
+        long expiresIn = 15 * 60; // 15 min in seconds
+        return ResponseEntity.ok(Map.of(
+            "accessToken", accessToken,
+            "refreshToken", newToken.getToken(),
+            "expiresIn", expiresIn
+        ));
     }
 
     @PostMapping("/verify-phone")

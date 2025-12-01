@@ -34,6 +34,12 @@ dependencies {
     runtimeOnly 'com.h2database:h2:2.2.224'
     // Springdoc OpenAPI for Swagger documentation
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+    // Firebase Admin SDK for FCM/APNs push notification support
+    implementation 'com.google.firebase:firebase-admin:9.2.0'
+    // Bucket4j for rate limiting
+    implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0'
+    // Thumbnailator for server-side image resizing and thumbnail generation
+    implementation 'net.coobird:thumbnailator:0.4.20'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -55,6 +61,10 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
         jvmTarget = "17"
     }
+}
+
+tasks.withType(Jar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 test {

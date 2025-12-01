@@ -1,18 +1,22 @@
 import React, {useState} from 'react'
 import { View, TextInput, Button, Text } from 'react-native'
-import { login, setToken } from './api'
+import { login, setTokens } from './api'
+import { PushRegister } from './PushRegister'
 
 export default function Login({onLogin}:{onLogin:()=>void}){
   const [email,setEmail] = useState('demo@paddlers.test')
+  const [password, setPassword] = useState('testpass')
   const [msg,setMsg] = useState('')
+  const [userId, setUserId] = useState<number|null>(null)
 
   async function submit(){
     setMsg('')
     try{
-      const res = await login(email)
+      const res = await login(email, password)
       if(res.ok){
         const j = await res.json()
-        await setToken(j.token)
+        await setTokens(j.accessToken, j.refreshToken)
+        setUserId(j.user.id)
         onLogin()
       } else {
         let body = null
@@ -29,9 +33,10 @@ export default function Login({onLogin}:{onLogin:()=>void}){
   return (
     <View style={{padding:16}}>
       <TextInput value={email} onChangeText={setEmail} placeholder="email" style={{borderWidth:1,padding:8,marginBottom:8}} />
+      <TextInput value={password} onChangeText={setPassword} placeholder="password" secureTextEntry style={{borderWidth:1,padding:8,marginBottom:8}} />
       <Button title="Login" onPress={submit} />
+      {userId && <PushRegister userId={userId} />}
       <Text style={{color:'red',marginTop:8}}>{msg}</Text>
     </View>
   )
 }
-

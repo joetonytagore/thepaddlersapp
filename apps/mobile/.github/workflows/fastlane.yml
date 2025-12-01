@@ -1,0 +1,19 @@
+name: Fastlane Build & Deploy
+on:
+  workflow_dispatch:
+jobs:
+  build-deploy:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      - name: Install dependencies
+        run: bundle install
+        working-directory: apps/mobile
+      - name: Build & deploy with Fastlane
+        run: bundle exec fastlane ios beta
+        working-directory: apps/mobile
+

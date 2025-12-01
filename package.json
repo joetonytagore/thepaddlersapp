@@ -9,5 +9,10 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "jest": "^30.2.0"
+  },
+  "dependencies": {
+    "@react-native-firebase/analytics": "^23.5.0",
+    "@sentry/react-native": "^7.7.0",
+    "firebase": "^12.6.0"
   }
 }
