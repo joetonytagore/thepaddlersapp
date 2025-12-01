@@ -1,32 +1,26 @@
-# Security Checklist for ThePaddlersApp
+# Security Guide
+- Audit all access quarterly
+- Stripe keys: rotate annually or after staff changes
+- API keys, DB passwords, and JWT secrets: rotate every 90 days
+## Rotation Schedule
 
+- Enforce MFA for privileged actions
+- Admins must enable MFA (TOTP or SMS)
+## MFA Guidance
+
+- No password reuse allowed
+- Passwords hashed with BCrypt
+- Minimum 12 characters, at least 1 number and symbol
+## Password Policies
+
+- Rotate secrets quarterly and after any incident
+- Use environment variables for runtime secrets
+- Never commit secrets to git
+- Store secrets in AWS Secrets Manager or Vault
 ## Secret Handling
-- All secrets (API keys, DB passwords, Stripe keys) are stored in environment variables or secret managers.
-- Never commit secrets to source control.
-- Rotate secrets regularly and after any suspected leak.
-- Example environment files are provided as `.env.example` in each app folder. Never commit `.env` files with real secrets.
 
-## Backup Schedule
-- Automated daily backups of the production database.
-- Backups are encrypted and stored offsite (e.g., S3).
-- Backup restore procedures are documented in `infra/restore_runbook.md`.
+- We respond within 48h and coordinate fixes
+- Email security@thepaddlers.club for vulnerabilities
+## Responsible Disclosure
 
-## Database Retention
-- Production database retention policy: retain data for 7 years unless otherwise required.
-- Remove demo/test accounts from production before deployment.
 
-## Deployment Checklist
-- All dependencies are up-to-date and scanned for vulnerabilities (Dependabot/Snyk/Qodana).
-- Environment variables are set for production (no demo credentials).
-- Data seeding only runs in local/dev environments (`SEED=true`).
-- All endpoints requiring authentication are protected.
-- HTTPS is enforced for all public endpoints.
-- Stripe webhook secret is set and signature verification is enabled.
-- Admin UI is protected by authentication and role-based access control.
-
-## Incident Response
-- Security incidents are logged and reviewed.
-- Contact information for security issues is provided in this file.
-
----
-For more details, see `OPS_README.md` and `infra/restore_runbook.md`.

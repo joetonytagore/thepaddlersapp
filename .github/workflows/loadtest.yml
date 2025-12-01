@@ -1,0 +1,21 @@
+name: Load Test
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Nightly at 3am UTC
+  workflow_dispatch:
+
+jobs:
+  k6-loadtest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install k6
+        run: |
+          curl -s https://packagecloud.io/install/repositories/loadimpact/k6/script.deb.sh | sudo bash
+          sudo apt-get install k6
+      - name: Run reservation load test
+        run: k6 run tests/load/reservations.js --vus 100 --duration 60s
+      - name: Run login load test
+        run: k6 run tests/load/login.js --vus 50 --duration 60s
+

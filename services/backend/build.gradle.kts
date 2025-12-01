@@ -1,0 +1,9 @@
+// ...existing code...
+// ...existing code...
+}
+    implementation("io.sentry:sentry-spring-boot-starter:7.8.0")
+    implementation("io.micrometer:micrometer-registry-prometheus:1.12.0")
+    implementation("io.micrometer:micrometer-core:1.12.0")
+    // ...existing code...
+dependencies {
+

@@ -1,0 +1,26 @@
+<configuration>
+</configuration>
+  </root>
+    <appender-ref ref="JSON"/>
+  <root level="INFO">
+  </appender>
+    </encoder>
+      </providers>
+        <stackTrace/>
+        <arguments/>
+        </pattern>
+          <pattern>{"level":"%level","logger":"%logger","thread":"%thread","trace_id":"%X{trace_id}","user_id":"%X{user_id}","org_id":"%X{org_id}","request_id":"%X{request_id}","message":"%message"}</pattern>
+        <pattern>
+        </timestamp>
+          <fieldName>timestamp</fieldName>
+        <timestamp>
+      <providers>
+    <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+    </rollingPolicy>
+      <maxHistory>30</maxHistory>
+      <fileNamePattern>logs/app-json.%d{yyyy-MM-dd}.log</fileNamePattern>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>logs/app-json.log</file>
+  <appender name="JSON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+

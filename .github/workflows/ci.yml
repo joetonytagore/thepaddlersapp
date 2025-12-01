@@ -1,42 +1,82 @@
-name: CI
+name: CI/CD
+
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Deploy to staging'
+        required: false
+        default: false
+
 jobs:
-  test:
+  build-test:
     runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:15
         env:
           POSTGRES_DB: thepaddlers
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpass
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    env:
-      DB_URL: jdbc:postgresql://localhost:5432/thepaddlers
-      DB_USER: testuser
-      DB_PASSWORD: testpass
-      STRIPE_SECRET: testsecret
+        options: >
+          --health-cmd="pg_isready -U postgres" --health-interval=10s --health-timeout=5s --health-retries=5
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
-          java-version: '17'
           distribution: 'temurin'
-      - name: Cache Gradle packages
+          java-version: 17
+          cache: gradle
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Cache Gradle
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-      - name: Run tests
-        run: ./gradlew test --info
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+      - name: Cache NPM
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: npm-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Run backend tests (unit + integration)
+        run: ./gradlew :backend:test
+      - name: Run frontend build
+        run: |
+          cd apps/web-admin && npm ci && npm run build
+          cd ../web-player && npm ci && npm run build
+      - name: Lint frontend
+        run: |
+          cd apps/web-admin && npm run lint
+          cd ../web-player && npm run lint
+      - name: Build Docker image
+        run: docker build -t thepaddlersapp-backend:latest ./services/backend
+      - name: Login to Docker registry
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push Docker image
+        if: startsWith(github.ref, 'refs/tags/')
+        run: docker tag thepaddlersapp-backend:latest ${{ secrets.DOCKER_REGISTRY }}/thepaddlersapp-backend:${{ github.ref_name }} && docker push ${{ secrets.DOCKER_REGISTRY }}/thepaddlersapp-backend:${{ github.ref_name }}
+
+  deploy-staging:
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true'
+    runs-on: ubuntu-latest
+    needs: build-test
+    steps:
+      - name: Deploy to staging (placeholder)
+        run: echo "Deploying to staging..." # Replace with SSH or kubectl apply
 

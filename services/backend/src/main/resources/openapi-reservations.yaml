@@ -1,0 +1,62 @@
+openapi: 3.0.3
+info:
+  title: Reservations API
+  version: 1.0.0
+paths:
+  /api/reservations:
+    post:
+      summary: Create reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReservationRequest'
+      responses:
+        '200':
+          description: Reservation created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationResponse'
+        '409': { description: Overlap error }
+        '400': { description: Validation error }
+  /api/reservations/{id}:
+    get:
+      summary: Get reservation
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Reservation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservationResponse'
+        '404': { description: Not found }
+components:
+  schemas:
+    CreateReservationRequest:
+      type: object
+      properties:
+        courtId: { type: string, format: uuid }
+        userId: { type: string, format: uuid }
+        start: { type: string, format: date-time }
+        end: { type: string, format: date-time }
+      required: [courtId, userId, start, end]
+    ReservationResponse:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        courtId: { type: string, format: uuid }
+        userId: { type: string, format: uuid }
+        startTime: { type: string, format: date-time }
+        endTime: { type: string, format: date-time }
+        createdAt: { type: string, format: date-time }
+        deletedAt: { type: string, format: date-time }
+

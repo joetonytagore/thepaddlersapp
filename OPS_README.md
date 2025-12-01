@@ -1,42 +1,32 @@
-# Ops Runbook (ThePaddlers)
+# Operations Runbook
 
-This runbook covers operational best practices for thePaddlers app: backups, monitoring, secrets, PCI, GDPR and basic incident steps.
+## Deployment Steps
+1. Clone repo and set up environment variables (.env)
+2. Build backend: `./gradlew :backend:build`
+3. Build frontend: `npm ci && npm run build` in each frontend app
+4. Build Docker images: `docker build -t thepaddlersapp-backend ./services/backend`
+5. Push images to registry: `docker push <registry>/thepaddlersapp-backend`
+6. Deploy using Kubernetes manifests or docker-compose
+7. Verify `/actuator/health` and `/actuator/metrics` endpoints
 
-1) Backups
-- Use `infra/pg_backup_to_s3.sh` to push daily backups to S3. Schedule via cron or Kubernetes CronJob.
-- Test restores monthly using `infra/restore_runbook.md`.
+## Backup/Restore
+- Use `infra/scripts/backup_db.sh` to backup Postgres DB to S3
+- Use `infra/scripts/restore_db.sh <backup_file>` to restore
+- S3 lifecycle rules auto-expire old backups (see infra/terraform/s3_backup.tf)
+- RTO: 1 hour, RPO: 24 hours
 
-2) Monitoring
-- Prometheus: enable Micrometer Prometheus registry (Actuator `/actuator/prometheus`).
-- Grafana: import dashboards with JVM and request-latency metrics.
-- Sentry: configure DSN via `SENTRY_DSN` env var to capture exceptions.
+## Scaling
+- Use horizontal pod autoscaling for backend (Kubernetes HPA)
+- Use managed DB (AWS RDS/Aurora) for scaling
+- Use S3 for media storage
 
-3) Secrets
-- Store secrets in AWS Secrets Manager or HashiCorp Vault. Do not commit secrets in repo.
-- In CI, use GitHub Actions secrets or OIDC to fetch short-lived creds.
+## Monitoring
+- Prometheus metrics at `/actuator/prometheus`
+- Grafana dashboards (see docs/grafana-metrics.md)
+- Sentry for error tracking (set SENTRY_DSN)
 
-4) PCI
-- Use Stripe Checkout or Elements to avoid handling raw card data.
-- Verify webhooks using the Stripe signing secret and store events for idempotency.
+## Incident Contact
+- Email: ops@thepaddlers.club
+- Slack: #ops-support
+- PagerDuty escalation for critical incidents
 
-5) GDPR
-- Use `DELETE /api/users/:id` (or admin flow) to anonymize or remove PII. Keep financial records for retention period.
-- Implement `GET /api/users/:id/export` to return user's data.
-
-6) Restore procedure
-- See `infra/restore_runbook.md` for step-by-step restore and smoke tests.
-
-7) CI
-- GitHub Actions workflow at `.github/workflows/ci.yml` runs backend tests using Postgres service.
-
-8) Incident Response (summary)
-- If keys are leaked: rotate Stripe keys, revoke AWS credentials, and update secrets store.
-- If data breach: follow legal obligations for notification and contain affected systems.
-
-## Security & Operations
-- See SECURITY.md for secret handling, backup, and deployment checklist.
-- Restore procedures: see infra/restore_runbook.md
-- Database retention: see SECURITY.md
-- All production deployments require a security scan (Dependabot/Snyk/Qodana).
-- Stripe keys and webhook secrets must be set via environment variables.
-- Demo/admin credentials must not be present in production.
